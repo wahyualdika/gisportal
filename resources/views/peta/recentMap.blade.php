@@ -16,6 +16,18 @@
 		</div>
 	</div>
 
+@if($maps->isEmpty())
+<div class="wrapper col7">
+    <div id="container3">
+      <div class="page">
+      			</br></br>
+      			<center>
+      				<a href="#">Tidak ada peta</a>
+      			</center>
+      </div>
+    </div>
+</div>
+@else
   <div class="wrapper col7">
   		<div id="container3">
         @foreach ($maps as $map)
@@ -37,6 +49,10 @@
     </div>
 
   </div>
+</div>
+@endif
+
+
 @endsection
 @section('footer')
 @endsection

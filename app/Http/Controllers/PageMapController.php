@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\MapModel;
-use Fpdf;
+use Codedge\Fpdf\Fpdf\Fpdf;
 
 class PageMapController extends Controller
 {
@@ -36,6 +36,9 @@ class PageMapController extends Controller
         $map = MapModel::find($id);
         $path_file = public_path().'/storage/authentication/'.$map->path;
         $pdf = new Fpdf();
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+        $pdf->SetFont('Times','',12);
         $pdf->Image($path_file,-5,25,215,245);
         $pdf->Output();
       }
