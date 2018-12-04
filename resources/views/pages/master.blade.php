@@ -82,7 +82,7 @@
 <!-- END -->
 	<div class="wrapper col5">
 		<div id="copyright">
-			<p style="float:left;margin-right:80px;weight:bold"><b> Total Visitor  : {{ Counter::show('pages.welcome') }}</b></p>
+			<p style="float:left;margin-right:80px;weight:bold"><b> Total Visitor  : {{ Counter::showAndCount('pages.welcome') }}</b></p>
 			<p class="fl_left">Copyright &copy; 2015 - All Rights Reserved - <a href="#">Bappeda Aceh</a></p>
 			<p class="fl_right"><a target="_blank" href="#" title="Free Website Templates">Bappeda Aceh</a></p>
 			<br class="clear" />
