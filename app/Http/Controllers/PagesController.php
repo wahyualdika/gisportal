@@ -16,6 +16,10 @@ class PagesController extends Controller
         return view('pages.welcome')->withBeritas($beritas);
     }
 
+    public function getDokumen(){
+      return view('pages.dokumen');
+    }
+
     public function getRecentNews(){
       $beritas = BeritaModel::orderBy('tanggal', 'desc')
              ->take(5)

@@ -59,12 +59,12 @@
   					<li>
   						<h2><img src="img/logo/Web_lap_64.png" alt="" /></a>WebGIS</h2>
   						<p style='font-size:14px;color:#40C440;'>Aplikasi Sistem Informasi Geografis (SIG) yang dirancang untuk bekerja dengan data yang tereferensi secara spasial/geografis berbasiskan web. Untuk mengakses data dan informasi geospasial Provinsi Aceh yang tersedia di UPTB - PDGA Bappeda Aceh.</p>
-  						<p class="readmore"><a href="wg.php">Menuju WebGIS &raquo;</a></p>
+  						<p class="readmore"><a href="{{route('home.webGIS')}}">Menuju WebGIS &raquo;</a></p>
   					</li>
   					<li>
   						<h2><img src="img/logo/On_news_64.png" alt="" />Dokumen</h2>
   						<p style="font-size:14px;color:#40C440;">Silahkan pilih Dokumen untuk mengakses atau mengunduh file tutorial yang berkaitan dengan materi Sistem Informasi Geografis (SIG), WebGIS, Pengolahan Citra Satelit, Teknik Pemetaan dan Dokumen Standarisasi Data Spasial.</p>
-  						<p class="readmore"><a href="doc.php?list=list.php">Menuju Dokumen &raquo;</a></p>
+  						<p class="readmore"><a href="{{route('home.dokumen')}}">Menuju Dokumen &raquo;</a></p>
   					</li>
   					<li class="last">
   						<h2><img src="img/logo/Loc_net_64.png" alt="" />Geoportal</h2>

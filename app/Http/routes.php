@@ -18,6 +18,7 @@ Route::get('/admin/login', function () {
 Route::get('/', 'PagesController@getHome')->name('home');
 Route::get('/berita/listTerbaru','PagesController@getRecentNews')->name('home.news.list');
 Route::get('/berita/detail/{id}','PagesController@getDetailNews')->name('home.news.detail');
+Route::get('/dokumen','PagesController@getDokumen')->name('home.dokumen');
 
 
 Route::get('/webgis','PageMapController@getWebGIS')->name('home.webGIS');
