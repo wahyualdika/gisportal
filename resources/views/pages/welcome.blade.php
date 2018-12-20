@@ -42,13 +42,6 @@
   		</div>
   		</div>
 
-  		<script type="text/javascript">
-
-  		</script>
-  		</div>
-
-  		</div>
-
   <div class="wrapper col3">
   			<div id="container" style="top:10px;">
   			<div class="homepage2">
