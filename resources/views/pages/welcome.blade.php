@@ -41,7 +41,7 @@
   			</ul>
   		</div>
   		</div>
-
+  </div>
   <div class="wrapper col3">
   			<div id="container" style="top:10px;">
   			<div class="homepage2">
@@ -69,6 +69,7 @@
   			</div>
   			</div>
   		</div>
+
 @endsection
 
 
