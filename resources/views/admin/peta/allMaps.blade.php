@@ -3,6 +3,7 @@
 @endsection
 
 @section('main')
+<div class=container-fluid>
 <table class='table'>
   <tr>
     <th>Nama Peta</th>
@@ -28,6 +29,7 @@
       </tr>
   @endforeach
 </table>
+</div>
 {{ $petas->links() }}
 @endsection
 

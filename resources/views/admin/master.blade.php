@@ -7,6 +7,7 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <!-- Optional theme -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
@@ -46,7 +47,8 @@
       <ul class="nav navbar-nav">
         {{-- <li ><a href="#">Data <span class="sr-only">(current)</span></a></li> --}}
         <li><a href="{{ route('admin.news.all') }}">Berita</a></li>
-		<li><a href="{{ route('admin.maps.all') }}">Peta</a></li>
+		    <li><a href="{{ route('admin.maps.all') }}">Peta</a></li>
+        <li><a href="{{ route('admin.layers.all') }}">Layer</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
 
@@ -56,6 +58,7 @@
             <li><a href="{{route('admin.news.form')}}">Masukkan Berita</a></li>
             {{-- <li><a href="#">Masukkan Data</a></li> --}}
 			<li><a href="{{route('admin.maps.form')}}">Masukkan Peta</a></li>
+      <li><a href="{{route('admin.layers.form')}}">Masukkan Layer</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="{!! url('/logout') !!}">Logout</a></li>
           </ul>

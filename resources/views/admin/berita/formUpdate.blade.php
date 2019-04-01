@@ -3,6 +3,7 @@
 @endsection
 
 @section('main')
+<div class=container-fluid>
 <form action='{{route('admin.news.update',['id'=>$berita->id])}}' method='POST' enctype='multipart/form-data'>
 {{ csrf_field() }}
 <script type="text/javascript">
@@ -51,6 +52,7 @@
 
 <button type='submit' name='submit' class='btn btn-default'>Submit</button>
 </form>
+</div>
 @endsection
 @section('script')
 @endsection
