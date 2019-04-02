@@ -21,15 +21,17 @@
   <label for='exampleLayerType'>Layer Type</label>
   <p>Current Type:{{$layer->type}}</p>
   <select class="form-control" id="type-layer" name="type">
-      <!-- <option selected="{{$layer->type}}" style="text-transform: uppercase">{{$layer->type}}</option> -->
+      <option selected="{{$layer->type}}" style="text-transform: uppercase">{{$layer->type}}</option>
       <option value="dynamic">Dynamic</option>
       <option value="feature">Feature</option>
   </select>
 </div>
 
-<div class='form-group'id="default-layer">
-  <label for='exampleDefaultLayer'>Default Layer</label>
-  <input type='number' name='default_layer' class='form-control'  placeholder='Masukkan Default Layer' value="{{$layer->default_layer}}">
+<div class='form-group' id="default-layer" style="display: none">
+  <label for='exampleDefaultLayer'>Default Layers</label>
+  <p>Current Layer:{{$default}}</p>
+  <select class="select2-multi-layers form-control" id="default-layer" name="default_layer[]" multiple="multiple">
+  </select>
 </div>
 
 <div class='form-group' id="default-fields" style="display: none">
@@ -60,7 +62,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="https://js.arcgis.com/3.27/"></script>
 <script type="text/javascript">
-var field="";
+  var field="";
+  var layer="";
+
 $(document).ready(function(){
 
     $("#type-layer").change(function(){
@@ -86,7 +90,6 @@ $(document).ready(function(){
 
 
         function getFields(){
-          //get the url and setup a proxy
           var url = dom.byId("url-layer").value;
 
           if(url.length === 0){
@@ -107,14 +110,11 @@ $(document).ready(function(){
         function requestSucceeded(response, io){
           var pad;
           pad = dojoString.pad;
-
-          //toJson converts the given JavaScript object
-          //and its properties and values into simple text
           dojoJson.toJsonIndentStr = "  ";
           //console.log("response as text:\n", dojoJson.toJson(response, true));
           field = response.fields;
           layer = response.layers;
-          //console.log(response.layers);
+
           var data = $.map(field, function (obj) {
               obj.text = obj.text || obj.name; // replace name with the property used for the text
               return obj;
@@ -128,7 +128,7 @@ $(document).ready(function(){
               return obj;
           });
           $(".select2-multi-layers").select2({
-              dataLayer: layer
+              data: dataLayer
           });
           //dom.byId("field-layer").value = field;
         }

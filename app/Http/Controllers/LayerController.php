@@ -33,7 +33,6 @@ class LayerController extends Controller
     public function inputLayers(Request $request){
 
       if($request->type=='dynamic'){
-        //dump($request);
         $this->validate($request,array(
             'title' => 'required|max:255',
             'url'   => 'required|max:255',
@@ -43,7 +42,6 @@ class LayerController extends Controller
         ));
       }
       elseif($request->type == 'feature'){
-        //dump($request);
         $this->validate($request,array(
             'title' => 'required|max:255',
             'url'   => 'required|max:255',
@@ -68,15 +66,31 @@ class LayerController extends Controller
 
     public function updateLayers($id){
       $layer = LayerModel::find($id);
-      if($layer->fields == null){
-        $fields = "Tidak ada Field";
-        return view('admin.layer.formUpdateLayer')->withLayer($layer)->withFields($fields);
+      if($layer->type == 'feature'){
+        if($layer->fields == null){
+          $fields = "Tidak ada Field"; $default = "Tidak ada Default Layer";
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withFields($fields)->withDefault($default);
+        }
+        else{
+          $arr = $layer->fields;
+          $default = "Tidak ada Default Layer";
+          $fields = implode(",",$arr);
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withFields($fields)->withDefault($default);
+        }
       }
-      else{
-        $arr = $layer->fields;
-        $fields = implode(",",$arr);
-        return view('admin.layer.formUpdateLayer')->withLayer($layer)->withFields($fields);
+      elseif($layer->type == 'dynamic'){
+        if($layer->default_layer == null){
+          $default = "Tidak ada Default Layer";
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withFields($fields);
+        }
+        else{
+          $arr = $layer->default_layer;
+          $fields = "Tidak ada Field";
+          $default = implode(",",$arr);
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withFields($fields);
+        }
       }
+
     }
 
     public function update(Request $request,$id){
@@ -110,11 +124,14 @@ class LayerController extends Controller
       $layer->visible = $request->visible;
       $layer->save();
       $generator->generateLayer();
+      return redirect()->route('admin.layers.all');
     }
 
     public function deleteLayers(Request $request, $id){
         $layer = LayerModel::find($id);
+        $generator = new GenerateLayer();
         $layer->delete();
+        $generator->generateLayer();
         return redirect()->route('admin.layers.all');
     }
 

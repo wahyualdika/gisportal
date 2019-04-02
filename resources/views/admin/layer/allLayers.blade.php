@@ -32,12 +32,6 @@
   </table>
 </div>
 
-<div class=container-fluid>
-<div class="row"><div class="col-md-1">
-<a href="{{route('admin.layer.generate')}}" role="button">Generate Layer</a>
-</div></div>
-</div>
-
 {{ $layers->links() }}
 @endsection
 

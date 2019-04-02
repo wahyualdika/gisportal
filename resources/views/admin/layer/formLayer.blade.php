@@ -1,5 +1,9 @@
 @extends('admin.master')
 @section('stylesheet')
+<style>
+    .failure { color: red; }
+    #status { font-size: 12px; }
+</style>
 @endsection
 
 @section('main')
@@ -14,6 +18,7 @@
 
 <div class='form-group' id="url">
   <label for='exampleInputURL'>URL Layer</label>
+  <span id="status"></span>
   <input type='text' name='url' class='form-control' id="url-layer" placeholder='Masukkan URL Layer' required>
 </div>
 
@@ -27,13 +32,14 @@
 </div>
 
 <div class='form-group' id="default-layer" style="display: none">
-  <label for='exampleDefaultLayer'>Default Layer</label>
-  <input type='number' name='default_layer' class='form-control' placeholder='Masukkan Default Layer'>
+  <label for='exampleDefaultLayer'>Default Layers</label>
+  <select class="select2-multi-layers form-control" id="default-layer" name="default_layer[]" multiple="multiple">
+  </select>
 </div>
 
 <div class='form-group' id="default-fields" style="display: none">
   <label for='exampleDefaultLayer'>Default Fields</label>
-  <select class="select2-multi form-control" id="field-layer" name="fields[]" multiple="multiple">
+  <select class="select2-multi-fields form-control" id="field-layer" name="fields[]" multiple="multiple">
   </select>
 </div>
 
@@ -61,6 +67,7 @@
 <script src="https://js.arcgis.com/3.27/"></script>
 <script type="text/javascript">
 var field="";
+var layer="";
 $(document).ready(function(){
 
     $("#type-layer").change(function(){
@@ -111,23 +118,32 @@ $(document).ready(function(){
           //toJson converts the given JavaScript object
           //and its properties and values into simple text
           dojoJson.toJsonIndentStr = "  ";
-          console.log("response as text:\n", dojoJson.toJson(response, true));
-          field = response.fields;
-          var data = $.map(field, function (obj) {
-              obj.text = obj.text || obj.name; // replace name with the property used for the text
-              return obj;
-          });
-          $(".select2-multi").select2({
-              data: data
-          });
-          //dom.byId("field-layer").value = field;
+          //console.log("response as text:\n", dojoJson.toJson(response, true));
+            field = response.fields;
+            layer = response.layers;
+            var data = $.map(field, function (obj) {
+                obj.text =  obj.text || obj.alias; // replace name with the property used for the text
+                return obj;
+            });
+            $(".select2-multi-fields").select2({
+                data: data
+            });
+
+            var dataLayer = $.map(layer, function (obj) {
+                obj.text =  obj.text || obj.name;
+                return obj;
+            });
+            $(".select2-multi-layers").select2({
+                data: dataLayer
+            });
+
         }
         function requestFailed(error, io){
 
-          domClass.add(dom.byId("content"), "failure");
+          domClass.add(dom.byId("status"), "failure");
 
           dojoJson.toJsonIndentStr = " ";
-          dom.byId("content").value = dojoJson.toJson(error, true);
+          dom.byId("status").value = dojoJson.toJson(error, true);
 
         }
     });

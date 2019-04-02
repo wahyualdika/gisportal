@@ -9,6 +9,7 @@ class LayerModel extends Model
   protected $table = 'layer';
   protected $guarded = [];
   protected $casts = [
-        'fields' => 'array'
+        'fields' => 'array',
+        'default_layer' => 'array',
   ];
 }

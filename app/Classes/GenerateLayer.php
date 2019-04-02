@@ -14,9 +14,14 @@ class GenerateLayer {
         $layers = LayerModel::all();
 
         foreach($layers as $layer){
-        $value = $layer->fields;
-          if($value==null){
-            $value = ["*"];
+        $fields = $layer->fields;
+        $layers = $layer->default_layer;
+          if($fields==null){
+            $fields = ["*"];
+          }
+          
+          if($layers==null){
+            $layers=["0"];
           }
 
           if($layer->visible==1){
@@ -28,7 +33,8 @@ class GenerateLayer {
 
 
           file_put_contents($destination,
-          "{
+          "
+          {
           type: '$layer->type',
           url: '$layer->url',
           title: '$layer->title',
@@ -38,8 +44,8 @@ class GenerateLayer {
                 visible: '$visible',
                 outFields: [",FILE_APPEND);
 
-                foreach( $value as $key => $n ) {
-                  file_put_contents($destination,"'".$n."'".",",FILE_APPEND);
+                foreach( $fields as $key => $field ) {
+                  file_put_contents($destination,"'".$field."'".",",FILE_APPEND);
                 }
 
 
@@ -47,7 +53,12 @@ class GenerateLayer {
                 "],
                 mode: 0,
                 imageParameters: buildImageParameters({
-                    layerIds: ['$layer->default_layer'],
+                    layerIds: [",FILE_APPEND);
+                    foreach( $layers as $key => $lyr ) {
+                      file_put_contents($destination,"'".$lyr."'".",",FILE_APPEND);
+                    }
+         file_put_contents($destination,
+                    "],
                     layerOption: 'show'
                 })
             }
