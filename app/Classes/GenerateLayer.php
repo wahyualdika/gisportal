@@ -19,7 +19,7 @@ class GenerateLayer {
           if($fields==null){
             $fields = ["*"];
           }
-          
+
           if($layers==null){
             $layers=["0"];
           }
@@ -61,6 +61,9 @@ class GenerateLayer {
                     "],
                     layerOption: 'show'
                 })
+            },
+            layerControlLayerInfos: {
+                layerGroup: '$layer->group'
             }
           },",FILE_APPEND);
         }

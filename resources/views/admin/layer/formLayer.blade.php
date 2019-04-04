@@ -31,6 +31,15 @@
   </select>
 </div>
 
+<div class='form-group' id="default-group" style="display: none">
+  <label for='exampleGroupLayer'>Group Layer</label>
+  <select class="js-example-tags form-control" id="group-layer" name="group">
+    @foreach($layers as $layer)
+        <option value="{{$layer->group}}">{{$layer->group}}</option>
+    @endforeach
+  </select>
+</div>
+
 <div class='form-group' id="default-layer" style="display: none">
   <label for='exampleDefaultLayer'>Default Layers</label>
   <select class="select2-multi-layers form-control" id="default-layer" name="default_layer[]" multiple="multiple">
@@ -68,27 +77,34 @@
 <script type="text/javascript">
 var field="";
 var layer="";
+
 $(document).ready(function(){
+    $(".js-example-tags").select2({
+      tags: true
+    });
 
     $("#type-layer").change(function(){
       var value = $("#type-layer").val();
         if(value == "dynamic"){
           $("#default-layer").show();
           $("#default-fields").hide();
+          $("#default-group").hide();
         }
         else if(value == "feature"){
           $("#default-fields").show();
+          $("#default-group").show();
           $("#default-layer").hide();
         }
         else{
           $("#default-fields").hide();
           $("#default-layer").hide();
+          $("#default-group").hide();
         }
 
     });
 });
 
-    require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/_base/json", "dojo/_base/array", "dojo/string", "esri/request", "dojo/domReady!","dijit/form/Select","dojo/data/ObjectStore","dojo/store/Memory","dojo/domReady!"], function(dom, on, domClass, dojoJson, array, dojoString, esriRequest,Select, ObjectStore, Memory) {
+    require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/_base/json", "dojo/_base/array", "dojo/string", "esri/request", "dojo/domReady!","dijit/form/Select","dojo/data/ObjectStore","dojo/store/Memory","dojo/domReady!"], function(dom, on, domClass, dojoJson, array, dojoString, esriRequest) {
         on(dom.byId("type-layer"), "change", getFields);
 
 
@@ -122,7 +138,7 @@ $(document).ready(function(){
             field = response.fields;
             layer = response.layers;
             var data = $.map(field, function (obj) {
-                obj.text =  obj.text || obj.alias; // replace name with the property used for the text
+                obj.text =  obj.text || obj.name; // replace name with the property used for the text
                 return obj;
             });
             $(".select2-multi-fields").select2({
@@ -149,6 +165,7 @@ $(document).ready(function(){
     });
 
   </script>
+
 
 
 @endsection

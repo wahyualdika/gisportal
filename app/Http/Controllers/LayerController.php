@@ -22,7 +22,8 @@ class LayerController extends Controller
     }
 
     public function getLayerForm(){
-        return view('admin.layer.formLayer');
+        $layers = LayerModel::all('group')->unique();
+        return view('admin.layer.formLayer')->withLayers($layers);
     }
 
     public function viewDetails($id){
@@ -59,6 +60,7 @@ class LayerController extends Controller
       $layer->id_layer = $request->id_layer;
       $layer->fields = $request->fields;
       $layer->visible = $request->visible;
+      $layer->group = $request->group;
       $layer->save();
       $generator->generateLayer();
       return redirect()->route('admin.layers.all');
@@ -66,28 +68,33 @@ class LayerController extends Controller
 
     public function updateLayers($id){
       $layer = LayerModel::find($id);
+      $groups = LayerModel::all()->unique('group');
+
       if($layer->type == 'feature'){
         if($layer->fields == null){
           $fields = "Tidak ada Field"; $default = "Tidak ada Default Layer";
-          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withFields($fields)->withDefault($default);
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withFields($fields)->withDefault($default)->
+          withGroups($groups);
         }
         else{
-          $arr = $layer->fields;
+          $arrfield = $layer->fields;
           $default = "Tidak ada Default Layer";
-          $fields = implode(",",$arr);
-          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withFields($fields)->withDefault($default);
+          // $fields = implode(",",$arr);
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withGroups($groups)->withArrfield($arrfield);
         }
       }
       elseif($layer->type == 'dynamic'){
         if($layer->default_layer == null){
-          $default = "Tidak ada Default Layer";
-          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withFields($fields);
+          $default = "Tidak ada Default Layer";$fields = "Tidak ada Field";
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withFields($fields)->
+          withGroups($groups);
         }
         else{
-          $arr = $layer->default_layer;
+          $arrlayer = $layer->default_layer;
           $fields = "Tidak ada Field";
           $default = implode(",",$arr);
-          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withFields($fields);
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withFields($fields)->
+          withGroups($groups)->withArrlayer($arrlayer);;
         }
       }
 
