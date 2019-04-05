@@ -66,7 +66,7 @@ class PetaController extends Controller
         ));
         $peta = MapModel::find($id);
         $peta->nama_peta = $request->namaPeta;
-        $peta->tanggal_peta = DateTime::createFromFormat('d/m/Y', $request->date)->format('Y-m-d');
+        $peta->tanggal_peta = DateTime::createFromFormat('Y-m-d', $request->date)->format('Y-m-d');
         $peta->deskripsi_peta = $request->deskripsiPeta;
 
         if($request->hasFile('gambarPeta')){

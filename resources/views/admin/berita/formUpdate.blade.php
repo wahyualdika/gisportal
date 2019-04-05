@@ -9,6 +9,7 @@
 <script type="text/javascript">
          $(function() {
       $("#datepicker").datetimepicker({
+        defaultDate: new Date("$berita->tanggal"),
         format: 'DD/MM/YYYY'
       });
     });

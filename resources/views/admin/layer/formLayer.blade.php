@@ -31,15 +31,6 @@
   </select>
 </div>
 
-<div class='form-group' id="default-group" style="display: none">
-  <label for='exampleGroupLayer'>Group Layer</label>
-  <select class="js-example-tags form-control" id="group-layer" name="group">
-    @foreach($layers as $layer)
-        <option value="{{$layer->group}}">{{$layer->group}}</option>
-    @endforeach
-  </select>
-</div>
-
 <div class='form-group' id="default-layer" style="display: none">
   <label for='exampleDefaultLayer'>Default Layers</label>
   <select class="select2-multi-layers form-control" id="default-layer" name="default_layer[]" multiple="multiple">
@@ -49,6 +40,16 @@
 <div class='form-group' id="default-fields" style="display: none">
   <label for='exampleDefaultLayer'>Default Fields</label>
   <select class="select2-multi-fields form-control" id="field-layer" name="fields[]" multiple="multiple">
+  </select>
+</div>
+
+<div class='form-group' id="default-group">
+  <label for='exampleGroupLayer'>Group Layer</label>
+  <select class="js-example-tags form-control" id="group-layer" name="group">
+    <option  selected="selected">Pilih Group</option>
+    @foreach($layers as $layer)
+        <option value="{{$layer->group}}">{{$layer->group}}</option>
+    @endforeach
   </select>
 </div>
 
@@ -88,12 +89,10 @@ $(document).ready(function(){
         if(value == "dynamic"){
           $("#default-layer").show();
           $("#default-fields").hide();
-          $("#default-group").hide();
         }
         else if(value == "feature"){
           $("#default-fields").show();
           $("#default-group").show();
-          $("#default-layer").hide();
         }
         else{
           $("#default-fields").hide();

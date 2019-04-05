@@ -9,6 +9,7 @@
 <script type="text/javascript">
          $(function() {
       $("#datepicker").datetimepicker({
+        defaultDate: new Date("$peta->tanggal_peta"),
         format: 'DD/MM/YYYY'
       });
     });

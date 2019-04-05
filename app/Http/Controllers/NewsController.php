@@ -72,11 +72,10 @@ class NewsController extends Controller
       ));
       $berita = BeritaModel::find($id);
       $berita->namaBerita = $request->namaBerita;
-      $berita->tanggal = DateTime::createFromFormat('d/m/Y', $request->date)->format('Y-m-d');
+      $berita->tanggal = DateTime::createFromFormat('Y-m-d', $request->date)->format('Y-m-d');
       $berita->deskripsiBerita = $request->deskripsi;
       $berita->isiBerita = $request->isi;
       $berita->linkBerita = $request->link;
-
 
 
       if($request->hasFile('gambarBerita')){
