@@ -131,12 +131,12 @@ $(document).ready(function(){
           var pad;
           pad = dojoString.pad;
           dojoJson.toJsonIndentStr = "  ";
-          //console.log("response as text:\n", dojoJson.toJson(response, true));
+          console.log("response as text:\n", dojoJson.toJson(response, true));
           field = response.fields;
           layer = response.layers;
 
           var data = $.map(field, function (obj) {
-              obj.text = obj.text || obj.name; // replace name with the property used for the text
+              obj.text = obj.name; // replace name with the property used for the text
               return obj;
           });
           $(".select2-multi").select2({
@@ -144,13 +144,13 @@ $(document).ready(function(){
           });
 
           var dataLayer = $.map(layer, function (obj) {
-              obj.text = obj.text || obj.name; // replace name with the property used for the text
+              obj.text =  obj.name; // replace name with the property used for the text
               return obj;
           });
           $(".select2-multi-layers").select2({
               data: dataLayer
           });
-          //dom.byId("field-layer").value = field;
+          console.log("sublayer:", dataLayer);
         }
         function requestFailed(error, io){
 

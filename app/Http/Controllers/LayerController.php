@@ -17,8 +17,8 @@ class LayerController extends Controller
     }
 
     public function viewAll(){
-      $layers = LayerModel::paginate(10);
-      return view('admin.layer.allLayers')->withlayers($layers);
+        $layers = LayerModel::paginate(10);
+        return view('admin.layer.allLayers')->withlayers($layers);
     }
 
     public function getLayerForm(){
@@ -27,20 +27,27 @@ class LayerController extends Controller
     }
 
     public function viewDetails($id){
-      $layer = LayerModel::find($id);
-      return view('admin.layer.viewDetailLayer')->withLayer($layer);
+        $layer = LayerModel::find($id);
+        if($layer->type == 'dynamic'){
+          $defaultlayer = implode(",",$layer->default_layer);
+          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withDefaultlayer($defaultlayer);
+        }
+        elseif ($layer->type == 'feature') {
+          $field = implode(",",$layer->fields);
+          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withField($field);
+        }
     }
 
     public function inputLayers(Request $request){
 
-      if($request->type=='dynamic'){
-        $this->validate($request,array(
-            'title' => 'required|max:255',
-            'url'   => 'required|max:255',
-            'type'  => 'required|max:255',
-            'default_layer' => 'required',
-            'id_layer' => 'required',
-        ));
+        if($request->type=='dynamic'){
+          $this->validate($request,array(
+              'title' => 'required|max:255',
+              'url'   => 'required|max:255',
+              'type'  => 'required|max:255',
+              'default_layer' => 'required',
+              'id_layer' => 'required',
+          ));
       }
       elseif($request->type == 'feature'){
         $this->validate($request,array(

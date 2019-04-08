@@ -25,7 +25,11 @@
     <h3 class="panel-title">Default Layer</h3>
   </div>
   <div class="panel-body">
-      {{ $layer->default_layer }}
+    @if($layer->type == 'dynamic')
+        {{$defaultlayer}}
+    @elseif($layer->type == 'feature')
+        {{$field}}
+    @endif
   </div></div>
 <div class="panel panel-primary"><div class="panel-heading">
     <h3 class="panel-title">Visibility</h3>
