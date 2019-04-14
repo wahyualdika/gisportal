@@ -3,8 +3,8 @@
 	<head>
 		<title>UPTB-PDGA</title>
 	</head>
-		<link rel="stylesheet" href="{!! URL::asset('/css/navi.css') !!}" type="text/css" />
-		<link rel="stylesheet" href="{!! URL::asset('/css/layout.css') !!}" type="text/css" />
+		<link rel="stylesheet" href="{!! URL::asset('css/navi.css') !!}" type="text/css" />
+		<link rel="stylesheet" href="{!! URL::asset('css/layout.css') !!}" type="text/css" />
     <link rel="stylesheet" href="{!! URL::asset('media/lofslidernews/css/layout.css') !!}" type="text/css" />
     <link rel="stylesheet" href="{!! URL::asset('media/lofslidernews/css/style.css') !!}" type="text/css" />
     @yield('stylesheet')
@@ -91,9 +91,9 @@
 @yield('footer')
 
   <script>var dojoConfig = { parseOnLoad: true };</script>
-  <script src="{!! URL::asset('media/lofslidernews/js/jquery.js') !!}"></script>
-  <script src="{!! URL::asset('media/lofslidernews/js/jquery.easing.js') !!}"></script>
-  <script src="{!! URL::asset('media/lofslidernews/js/script.js') !!}"></script>
+  <script src="{!! URL::asset('/media/lofslidernews/js/jquery.js') !!}"></script>
+  <script src="{!! URL::asset('/media/lofslidernews/js/jquery.easing.js') !!}"></script>
+  <script src="{!! URL::asset('/media/lofslidernews/js/script.js') !!}"></script>
   <script type="text/javascript">
   $(document).ready( function(){
   $('#lofslidecontent45').lofJSidernews( {interval	:4000,

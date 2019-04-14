@@ -55,8 +55,8 @@ Route::post('/admin/layers/delete/{id}','LayerController@deleteLayers')->name('a
 Route::get('/admin/layers/update/{id}','LayerController@updateLayers')->name('admin.layers.formUpdate');
 Route::post('admin/layers/update/{id}','LayerController@update')->name('admin.layers.update');
 
-//URL Untuk generate layers
-Route::get('/admin/generate','LayerController@generateLayer')->name('admin.layer.generate');
+//URL Untuk generate layers dari DB
+Route::get('/admin/generate','LayerController@generateFromDB')->name('admin.layer.generate');
 
 Route::auth();
 

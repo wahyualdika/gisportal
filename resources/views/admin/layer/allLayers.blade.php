@@ -4,6 +4,13 @@
 
 @section('main')
 <div class=container-fluid>
+  
+  @if (session('status'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+  @endif
+
   <table class='table'>
     <tr>
       <th>Nama Layer</th>
@@ -30,6 +37,7 @@
           </tr>
     @endforeach
   </table>
+  <a href='{{route('admin.layer.generate')}}' class='btn btn-info'>Generate Layer</a>
 </div>
 
 {{ $layers->links() }}

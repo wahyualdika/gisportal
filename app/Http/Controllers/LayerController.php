@@ -68,7 +68,6 @@ class LayerController extends Controller
       $layer->fields = $request->fields;
       $layer->visible = $request->visible;
       $layer->group = $request->group;
-      //dd($layer->group);
       $layer->save();
       $generator->generateLayer();
       return redirect()->route('admin.layers.all');
@@ -136,6 +135,13 @@ class LayerController extends Controller
       $layer->save();
       $generator->generateLayer();
       return redirect()->route('admin.layers.all');
+    }
+
+    public function generateFromDB()
+    {
+      $generator = new GenerateLayer();
+      $generator->generateLayer();
+      return redirect()->route('admin.layers.all')->with('success', 'Layer Generated!');
     }
 
     public function deleteLayers(Request $request, $id){
