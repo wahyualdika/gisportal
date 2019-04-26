@@ -17,37 +17,65 @@
   <input type='text' name='url' class='form-control' id="url-layer" placeholder='Masukkan URL Layer' value="{{$layer->url}}" required>
 </div>
 
+<!-- <div class='form-group' id="type">
+  <label for='exampleLayerType'>Layer Type</label>
+  <p>Current Type:{{$layer->type}}</p>
+  @if($layer->type == 'feature')
+      <select class="form-control" id="type-layer" name="type">
+          <option selected="{{$layer->type}}" style="text-transform: uppercase">{{$layer->type}}</option>
+          <option value="feature">Feature</option>
+      </select>
+  @elseif($layer->type == 'dynamic')
+      <select class="form-control" id="type-layer" name="type">
+          <option selected="{{$layer->type}}" style="text-transform: uppercase">{{$layer->type}}</option>
+          <option value="dynamic">Dynamic</option>
+      </select>
+  @endif
+</div> -->
+
 <div class='form-group' id="type">
   <label for='exampleLayerType'>Layer Type</label>
   <p>Current Type:{{$layer->type}}</p>
-  <select class="form-control" id="type-layer" name="type">
-      <option selected="{{$layer->type}}" style="text-transform: uppercase">{{$layer->type}}</option>
-      <option value="dynamic">Dynamic</option>
-      <option value="feature">Feature</option>
-  </select>
+      <select class="form-control" id="type-layer" name="type">
+          <option value="feature">Feature</option>
+          <option value="dynamic">Dynamic</option>
+      </select>
 </div>
 
-@if($layer->type == 'feature')
+<!-- <div class='form-group' id="default-layer-attr">
+
+</div>
+
+<div class='form-group' id="default-field-attr">
+
+</div> -->
+
+
   <div class='form-group' id="default-fields" style="display: none">
     <label for='exampleDefaultFields'>Default Fields</label>
     <select class="select2-multi form-control" id="field-layer" name="fields[]" multiple="multiple">
-      @foreach($fields as $val)
-        <option  selected="selected" value="{{$val}}">{{$val}}</option>
-      @endforeach
+      @if($layer->fields == null)
+        <p>Tidak Ada Data</p>
+      @else
+        @foreach($fields as $val)
+          <option  selected="selected" value="{{$val}}">{{$val}}</option>
+        @endforeach
+      @endif
     </select>
   </div>
 
-@elseif($layer->type == 'dynamic')
   <div class='form-group' id="default-layer" style="display: none">
     <label for='exampleDefaultLayer'>Default Layers</label>
     <select class="select2-multi-layers form-control" id="default-layer" name="default_layer[]" multiple="multiple">
+      @if($layer->default_layer == null)
+        <p>Tidak Ada Data</p>
+      @else
         @foreach($default as $val)
           <option  selected="selected" value="{{$val}}">{{$val}}</option>
         @endforeach
+      @endif
     </select>
   </div>
-
-@endif
 
 <div class='form-group' id="default-group">
   <label for='exampleGroupLayer'>Group Layer</label>
@@ -79,9 +107,31 @@
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="https://js.arcgis.com/3.27/"></script>
+
 <script type="text/javascript">
   var field="";
   var layer="";
+  // var fAttr="<label for='exampleDefaultFields'>Default Fields</label>"+
+  //                           "<select class='select2-multi form-control' id='field-layer' name='fields[]' multiple='multiple'>"+
+  //                           "@if($layer->fields == null)"+
+  //                           "<p>@{{$fields}}</p>"+
+  //                           "@else"+
+  //                           "@foreach($fields as $val)"+
+  //                           "<option  selected='selected' value='{{$val}}'>{{$val}}</option>"+
+  //                           "@endforeach"+
+  //                           "@endif"+
+  //                           "</select>";
+  //
+  // var lAttr="<label for='exampleDefaultFields'>Default Layers</label>"+
+  //                           "<select class='select2-multi form-control' id='default-layer' name='default_layer[]' multiple='multiple'>"+
+  //                           "@if($layer->default_layer == null)"+
+  //                           "<p>@{{$default}}</p>"+
+  //                           "@else"+
+  //                           "@foreach($default as $val)"+
+  //                           "<option  selected='selected' value='{{$val}}'>{{$val}}</option>"+
+  //                           "@endforeach"+
+  //                           "@endif"+
+  //                           "</select>";
 
 $(document).ready(function(){
     $(".js-example-tags").select2({
@@ -89,23 +139,26 @@ $(document).ready(function(){
     });
     $("#type-layer").change(function(){
       var value = $("#type-layer").val();
-        if(value == "dynamic"){
-          $("#default-layer").show();
-          $("#default-fields").hide();
-        }
-        else if(value == "feature"){
-          $("#default-fields").show();
+        if(value == "feature"){
+        //  $("#default-field-attr").append(fAttr);
+        //  $("#default-layer-attr").remove(lAttr);
           $("#default-layer").hide();
+          $("#default-fields").show();
+        }
+        else if(value == "dynamic"){
+        //  $("#default-field-attr").remove(fAttr);
+        //  $("#default-layer-attr").append(lAttr);
+          $("#default-fields").hide();
+          $("#default-layer").show();
         }
         else{
-          $("#default-fields").hide();
-          $("#default-layer").hide();
+
         }
 
     });
 });
 
-    require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/_base/json", "dojo/_base/array", "dojo/string", "esri/request", "dojo/domReady!","dijit/form/Select","dojo/data/ObjectStore","dojo/store/Memory","dojo/domReady!"], function(dom, on, domClass, dojoJson, array, dojoString, esriRequest,Select, ObjectStore, Memory) {
+    require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/_base/json", "dojo/_base/array", "dojo/string", "esri/request", "dojo/domReady!","dojo/domReady!"], function(dom, on, domClass, dojoJson, array, dojoString, esriRequest) {
         on(dom.byId("type-layer"), "change", getFields);
 
 
@@ -131,14 +184,19 @@ $(document).ready(function(){
           var pad;
           pad = dojoString.pad;
           dojoJson.toJsonIndentStr = "  ";
-          console.log("response as text:\n", dojoJson.toJson(response, true));
-          field = response.fields;
-          layer = response.layers;
+          //console.log("response as text:\n", dojoJson.toJson(response, true));
+          if ( response.hasOwnProperty("fields") ){
+            field = response.fields;
+            for(var i = 0; i < field.length; i++){
+                field[i]= {id:field[i].name,name:field[i].name}
+            }
+            var data = $.map(field, function (obj) {
+                obj.text = obj.name; // replace name with the property used for the text
+                return obj;
+            });
+          }
 
-          var data = $.map(field, function (obj) {
-              obj.text = obj.name; // replace name with the property used for the text
-              return obj;
-          });
+          layer = response.layers;
           $(".select2-multi").select2({
               data: data
           });
@@ -150,7 +208,7 @@ $(document).ready(function(){
           $(".select2-multi-layers").select2({
               data: dataLayer
           });
-          console.log("sublayer:", dataLayer);
+          console.log("sublayer:", response.layers);
         }
         function requestFailed(error, io){
 

@@ -8,6 +8,15 @@
 
 @section('main')
 <div class=container-fluid>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <form action='{{route('admin.layers.submit')}}' method='POST' enctype='multipart/form-data'>
 {{ csrf_field() }}
 
@@ -78,7 +87,7 @@
 <script type="text/javascript">
 var field="";
 var layer="";
-
+var count=0;
 $(document).ready(function(){
     $(".js-example-tags").select2({
       tags: true
@@ -134,16 +143,24 @@ $(document).ready(function(){
           //and its properties and values into simple text
           dojoJson.toJsonIndentStr = "  ";
           //console.log("response as text:\n", dojoJson.toJson(response, true));
+
+          if ( response.hasOwnProperty("fields") ){
             field = response.fields;
-            layer = response.layers;
+            for(var i = 0; i < field.length; i++){
+                field[i]= {id:field[i].name,name:field[i].name}
+            }
             var data = $.map(field, function (obj) {
-                obj.text =  obj.text || obj.name; // replace name with the property used for the text
+                obj.text = obj.name; // replace name with the property used for the text
                 return obj;
             });
             $(".select2-multi-fields").select2({
                 data: data
             });
+          }
 
+            layer = response.layers;
+
+            console.log("response as text:\n", data, count++);
             var dataLayer = $.map(layer, function (obj) {
                 obj.text =  obj.text || obj.name;
                 return obj;
@@ -151,7 +168,7 @@ $(document).ready(function(){
             $(".select2-multi-layers").select2({
                 data: dataLayer
             });
-
+            console.log("response as text:\n", dataLayer);
         }
         function requestFailed(error, io){
 

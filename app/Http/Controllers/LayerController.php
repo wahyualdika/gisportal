@@ -22,7 +22,7 @@ class LayerController extends Controller
     }
 
     public function getLayerForm(){
-        $layers = LayerModel::all('group')->unique();
+        $layers = LayerModel::all()->unique('group');
         return view('admin.layer.formLayer')->withLayers($layers);
     }
 
@@ -79,24 +79,22 @@ class LayerController extends Controller
 
       if($layer->type == 'feature'){
         if($layer->fields == null){
-          $fields = "Tidak ada Field"; $default = "Tidak ada Default Layer";
+          $fields = "Tidak ada Field";
           return view('admin.layer.formUpdateLayer')->withLayer($layer)->withFields($fields)->withDefault($default)->withGroups($groups);
         }
         else{
           $fields = $layer->fields;
-          $default = "Tidak ada Default Layer";
-          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withGroups($groups)->withFields($fields);
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withGroups($groups)->withFields($fields);
         }
       }
       elseif($layer->type == 'dynamic'){
         if($layer->default_layer == null){
-          $default = "Tidak ada Default Layer";$fields = "Tidak ada Field";
-          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withFields($fields)->withGroups($groups);
-        }
+          $default = "Tidak ada Default Layer";
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withGroups($groups);
+      }
         else{
           $default = $layer->default_layer;
-          $fields = "Tidak ada Field";
-          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withFields($fields)->withGroups($groups);
+          return view('admin.layer.formUpdateLayer')->withLayer($layer)->withDefault($default)->withGroups($groups);
         }
       }
 
