@@ -31,7 +31,7 @@
           <!-- <form  class="forms-sample" action='{{route('admin.layers.delete',['id'=>$layer->id])}}' method='post'> -->
             <!-- {{ csrf_field() }} -->
 
-          <input type='hidden' name='id' id='id' value= {{ $layer->id }} />
+          <input type='hidden' name='id' class='id' value= {{ $layer->id }} />
           <td style='width:140px'>
             <div class='btn-group' role='group' aria-label='...'>
               <button class='btn btn-default opener-dialog'>Hapus</button>
@@ -61,7 +61,7 @@ $( function() {
               text: "Yes",
               icon: "ui-icon-heart",
               click: function() {
-                var id = $("#id").val();
+                var id = $(".id").val();
                 //console.log(input);
                 $.ajaxSetup({
                   headers: {
