@@ -51,22 +51,21 @@ $( function() {
               icon: "ui-icon-heart",
               click: function() {
                 var id = $(".id").val();
-                //console.log(input);
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
                 });
                 $.ajax({
-                    url: "/admin/news/delete/"+id,
+                    url: "{{url('/admin/news/delete')}}/"+id,
                     type: 'POST',
                     data: {
                         "id": id,
                     },
                     success: function (response)
                     {
-                      console.log(response);
-                      window.location.href = "{{url('/admin/allNews')}}"
+                      // console.log(response);
+                      location.reload(true);
                       $( "#dialog-form" ).dialog( "close" );
                     },
                     error: function(xhr) {
@@ -75,6 +74,12 @@ $( function() {
                 });
 
             }
+        },{
+              text: "No",
+              icon: "ui-icon-heart",
+              click: function() {
+                  $( "#dialog-form" ).dialog( "close" );
+              }
         }
     ]
   });

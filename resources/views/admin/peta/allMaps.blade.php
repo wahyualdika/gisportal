@@ -52,15 +52,15 @@ $( function() {
                   }
                 });
                 $.ajax({
-                    url: "/admin/maps/update/"+id,
+                    url:"{{url('/admin/maps/delete')}}/"+id,
                     type: 'POST',
                     data: {
                         "id": id,
                     },
                     success: function (response)
                     {
-                      console.log(response);
-                      window.location.href = "{{url('/admin/allMaps')}}"
+                      // console.log(response);
+                      location.reload(true);
                       $( "#dialog-form" ).dialog( "close" );
                     },
                     error: function(xhr) {

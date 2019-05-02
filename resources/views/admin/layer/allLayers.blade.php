@@ -27,6 +27,7 @@
         <tr>
           <td>{{ $layer->title }}</td>
           <td>{{ $layer->url }}</td>
+          <td>{{$layer->id}}</td>
           <td><a href= "{!! url('/admin/layerDetails/'.$layer->id) !!}" >Lihat Layer</a></td>
           <!-- <form  class="forms-sample" action='{{route('admin.layers.delete',['id'=>$layer->id])}}' method='post'> -->
             <!-- {{ csrf_field() }} -->
@@ -62,22 +63,22 @@ $( function() {
               icon: "ui-icon-heart",
               click: function() {
                 var id = $(".id").val();
-                //console.log(input);
+                console.log(id);
                 $.ajaxSetup({
                   headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                   }
                 });
                 $.ajax({
-                    url: "/admin/layers/delete/"+id,
+                    url: "{{url('/admin/layers/delete')}}/"+id,
                     type: 'POST',
                     data: {
                         "id": id,
                     },
                     success: function (response)
                     {
-                      console.log(response);
-                      window.location.href = "{{url('/admin/allLayers')}}"
+                      // console.log(response);
+                       location.reload(true);
                       $( "#dialog-form" ).dialog( "close" );
                     },
                     error: function(xhr) {
@@ -86,6 +87,13 @@ $( function() {
                 });
 
             }
+        },
+        {
+              text: "No",
+              icon: "ui-icon-heart",
+              click: function() {
+                  $( "#dialog-form" ).dialog( "close" );
+              }
         }
     ]
   });
