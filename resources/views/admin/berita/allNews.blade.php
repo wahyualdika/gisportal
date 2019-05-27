@@ -26,13 +26,14 @@
           <input type='hidden' name='id' class='id' value= {{ $berita->id }} />
           <td style='width:140px'>
             <div class='btn-group' role='group' aria-label='...'>
-              <button  class='btn btn-default opener-dialog'>Hapus</button>
+              <button  class='btn btn-default opener-dialog' data-value="{{$berita->id}}">Hapus</button>
               <a href='{!! url('/admin/news/update/'.$berita->id) !!}' class='btn btn-default'>Edit</a>
             </div>
           </td>
           <!-- </form> -->
           </tr>
     @endforeach
+    <input type='hidden' name='id' class='id' />
   </table>
 </div>
 {{ $beritas->links() }}
@@ -85,6 +86,8 @@ $( function() {
   });
 
   $( ".opener-dialog" ).click(function() {
+    var id = $(this).data('value');
+    $(".id").val(id);
     $( "#dialog-form" ).dialog( "open" );
   });
 

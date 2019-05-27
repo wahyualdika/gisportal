@@ -21,13 +21,14 @@
         <input type='hidden' name='id' value= {{ $peta->id }} />
         <td style='width:140px'>
           <div class='btn-group' role='group' aria-label='...'>
-            <button  class='btn btn-default opener-dialog'>Hapus</button>
+            <button  class='btn btn-default opener-dialog' data-value="{{$peta->id}}">Hapus</button>
             <a href='{!! url('/admin/maps/update/'.$peta->id) !!}' class='btn btn-default'>Edit</a>
           </div>
         </td>
         <!-- </form> -->
       </tr>
   @endforeach
+  <input type='hidden' name='id' class='id' />
 </table>
 </div>
 {{ $petas->links() }}
@@ -74,6 +75,8 @@ $( function() {
   });
 
   $( ".opener-dialog" ).click(function() {
+    var id = $(this).data('value');
+    $(".id").val(id);
     $( "#dialog-form" ).dialog( "open" );
   });
 

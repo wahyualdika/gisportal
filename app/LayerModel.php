@@ -6,10 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class LayerModel extends Model
 {
-  protected $table = 'layer';
-  protected $guarded = [];
-  protected $casts = [
-        'fields' => 'array',
-        'default_layer' => 'array',
-  ];
+    protected $table = 'layer';
+    protected $guarded = [];
+    protected $casts = [
+          'fields' => 'array',
+          'default_layer' => 'array',
+    ];
+
+    public function popUp()
+    {
+        return $this->hasOne('App\PopUpLayer','layer_id','id');
+    }
 }

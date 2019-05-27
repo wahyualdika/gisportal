@@ -13,8 +13,9 @@ abstract class Request extends FormRequest
           'url.required' => ' Layer URL is required',
           'default_layer.required' => ' Default Layer for Dynamic Layer is required',
           'type.required'  => 'Layer Type for Dynamic Layer is required',
-          'field.required'  => 'Field for Feature Layer is required',
+          'fields.required'  => 'Field for Feature Layer is required',
           'id_layer.required'  => 'Layer ID is required',
+          'id_layer.unique' => 'ID Layer already taken'
       ];
   }
 }

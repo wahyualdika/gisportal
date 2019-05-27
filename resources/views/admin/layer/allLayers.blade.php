@@ -27,15 +27,13 @@
         <tr>
           <td>{{ $layer->title }}</td>
           <td>{{ $layer->url }}</td>
-          <td>{{$layer->id}}</td>
           <td><a href= "{!! url('/admin/layerDetails/'.$layer->id) !!}" >Lihat Layer</a></td>
           <!-- <form  class="forms-sample" action='{{route('admin.layers.delete',['id'=>$layer->id])}}' method='post'> -->
             <!-- {{ csrf_field() }} -->
 
-          <input type='hidden' name='id' class='id' value= {{ $layer->id }} />
           <td style='width:140px'>
             <div class='btn-group' role='group' aria-label='...'>
-              <button class='btn btn-default opener-dialog'>Hapus</button>
+              <button class='btn btn-default opener-dialog' data-value="{{$layer->id}}">Hapus</button>
               <a href='{!! url('/admin/layers/update/'.$layer->id) !!}' class='btn btn-default'>Edit</a>
             </div>
           </td>
@@ -43,6 +41,7 @@
           <!-- <button id="opener" class='btn btn-default'>opener</button> -->
           </tr>
     @endforeach
+    <input type='hidden' name='id' class='id' />
   </table>
   <a href='{{route('admin.layer.generate')}}' class='btn btn-info'>Generate Layer</a>
 </div>
@@ -62,7 +61,7 @@ $( function() {
               text: "Yes",
               icon: "ui-icon-heart",
               click: function() {
-                var id = $(".id").val();
+              var id = $(".id").val();
                 console.log(id);
                 $.ajaxSetup({
                   headers: {
@@ -99,6 +98,8 @@ $( function() {
   });
 
   $( ".opener-dialog" ).click(function() {
+    var id = $(this).data('value');
+    $(".id").val(id);
     $( "#dialog-form" ).dialog( "open" );
   });
 

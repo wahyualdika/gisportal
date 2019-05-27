@@ -4,34 +4,29 @@
 
 @section('main')
 <div class=container-fluid>
+
+@if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+@endif
+
 <form action='{{route('admin.layers.update',['id'=>$layer->id])}}' method='POST' enctype='multipart/form-data'>
 {{ csrf_field() }}
 
 <div class='form-group' id="nama">
   <label for='exampleInputTitle'>Nama Layer</label>
-  <input type='text' name='title' class='form-control'  placeholder='Masukkan Nama Layer' value="{{$layer->title}}"required>
+  <input type='text' name='title' class='form-control'  placeholder='Masukkan Nama Layer' value="{{$layer->title}}" required>
 </div>
 
 <div class='form-group'id="url">
   <label for='exampleInputURL'>URL Layer</label>
   <input type='text' name='url' class='form-control' id="url-layer" placeholder='Masukkan URL Layer' value="{{$layer->url}}" required>
 </div>
-
-<!-- <div class='form-group' id="type">
-  <label for='exampleLayerType'>Layer Type</label>
-  <p>Current Type:{{$layer->type}}</p>
-  @if($layer->type == 'feature')
-      <select class="form-control" id="type-layer" name="type">
-          <option selected="{{$layer->type}}" style="text-transform: uppercase">{{$layer->type}}</option>
-          <option value="feature">Feature</option>
-      </select>
-  @elseif($layer->type == 'dynamic')
-      <select class="form-control" id="type-layer" name="type">
-          <option selected="{{$layer->type}}" style="text-transform: uppercase">{{$layer->type}}</option>
-          <option value="dynamic">Dynamic</option>
-      </select>
-  @endif
-</div> -->
 
 <div class='form-group' id="type">
   <label for='exampleLayerType'>Layer Type</label>
@@ -42,16 +37,7 @@
       </select>
 </div>
 
-<!-- <div class='form-group' id="default-layer-attr">
-
-</div>
-
-<div class='form-group' id="default-field-attr">
-
-</div> -->
-
-
-  <div class='form-group' id="default-fields" style="display: none">
+<div class='form-group' id="default-fields" style="display: none">
     <label for='exampleDefaultFields'>Default Fields</label>
     <select class="select2-multi form-control" id="field-layer" name="fields[]" multiple="multiple">
       @if($layer->fields == null)
@@ -62,7 +48,7 @@
         @endforeach
       @endif
     </select>
-  </div>
+</div>
 
   <div class='form-group' id="default-layer" style="display: none">
     <label for='exampleDefaultLayer'>Default Layers</label>
@@ -111,28 +97,6 @@
 <script type="text/javascript">
   var field="";
   var layer="";
-  // var fAttr="<label for='exampleDefaultFields'>Default Fields</label>"+
-  //                           "<select class='select2-multi form-control' id='field-layer' name='fields[]' multiple='multiple'>"+
-  //                           "@if($layer->fields == null)"+
-  //                           "<p>@{{$fields}}</p>"+
-  //                           "@else"+
-  //                           "@foreach($fields as $val)"+
-  //                           "<option  selected='selected' value='{{$val}}'>{{$val}}</option>"+
-  //                           "@endforeach"+
-  //                           "@endif"+
-  //                           "</select>";
-  //
-  // var lAttr="<label for='exampleDefaultFields'>Default Layers</label>"+
-  //                           "<select class='select2-multi form-control' id='default-layer' name='default_layer[]' multiple='multiple'>"+
-  //                           "@if($layer->default_layer == null)"+
-  //                           "<p>@{{$default}}</p>"+
-  //                           "@else"+
-  //                           "@foreach($default as $val)"+
-  //                           "<option  selected='selected' value='{{$val}}'>{{$val}}</option>"+
-  //                           "@endforeach"+
-  //                           "@endif"+
-  //                           "</select>";
-
 $(document).ready(function(){
     $(".js-example-tags").select2({
       tags: true
@@ -140,14 +104,10 @@ $(document).ready(function(){
     $("#type-layer").change(function(){
       var value = $("#type-layer").val();
         if(value == "feature"){
-        //  $("#default-field-attr").append(fAttr);
-        //  $("#default-layer-attr").remove(lAttr);
           $("#default-layer").hide();
           $("#default-fields").show();
         }
         else if(value == "dynamic"){
-        //  $("#default-field-attr").remove(fAttr);
-        //  $("#default-layer-attr").append(lAttr);
           $("#default-fields").hide();
           $("#default-layer").show();
         }

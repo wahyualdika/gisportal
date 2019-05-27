@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Classes\GenerateLayer;
+use App\Classes\GeneratePopUp;
 use Illuminate\Http\Request;
 use App\LayerModel;
+use App\PopUpLayer;
 use App\Http\Requests;
 use File;
 use Illuminate\Support\Facades\Storage;
@@ -28,13 +30,14 @@ class LayerController extends Controller
 
     public function viewDetails($id){
         $layer = LayerModel::find($id);
+        $popup = $layer->find($id)->popUp;
         if($layer->type == 'dynamic'){
           $defaultlayer = implode(",",$layer->default_layer);
-          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withDefaultlayer($defaultlayer);
+          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withDefaultlayer($defaultlayer)->withPopup($popup);
         }
         elseif ($layer->type == 'feature') {
           $field = implode(",",$layer->fields);
-          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withField($field);
+          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withField($field)->withPopup($popp);
         }
     }
 
@@ -46,7 +49,7 @@ class LayerController extends Controller
               'url'   => 'required|max:255',
               'type'  => 'required|max:255',
               'default_layer' => 'required',
-              'id_layer' => 'required',
+              'id_layer' => 'required|unique:layer,id_layer',
           ));
       }
       elseif($request->type == 'feature'){
@@ -54,12 +57,13 @@ class LayerController extends Controller
             'title' => 'required|max:255',
             'url'   => 'required|max:255',
             'type'  => 'required|max:255',
-            'id_layer' => 'required',
+            'id_layer' => 'required|unique:layer,id_layer',
             'fields' => 'required',
         ));
       }
       $layer = new LayerModel();
       $generator = new GenerateLayer();
+      $popUpGenerator = new GeneratePopUp();
       $layer->title = $request->title;
       $layer->url = $request->url;
       $layer->type = strtolower($request->type);
@@ -70,6 +74,7 @@ class LayerController extends Controller
       $layer->group = $request->group;
       $layer->save();
       $generator->generateLayer();
+      $popUpGenerator->generatePopUp();
       return redirect()->route('admin.layers.all');
     }
 
@@ -104,10 +109,10 @@ class LayerController extends Controller
       if($request->type=='dynamic'){
         $this->validate($request,array(
             'title' => 'required|max:255',
-            'url'   => 'required|max:255',
+            'url'   => 'required',
             'type'  => 'required|max:255',
             'default_layer' => 'required',
-            'id_layer' => 'required',
+            'id_layer' => 'required|unique:layer,id_layer',
         ));
       }
       elseif($request->type == 'feature'){
@@ -115,7 +120,7 @@ class LayerController extends Controller
             'title' => 'required|max:255',
             'url'   => 'required|max:255',
             'type'  => 'required|max:255',
-            'id_layer' => 'required',
+            'id_layer' => 'required|unique:layer,id_layer',
             'fields' => 'required',
         ));
       }
@@ -145,6 +150,7 @@ class LayerController extends Controller
     public function deleteLayers(Request $request, $id){
         $layer = LayerModel::find($id);
         $generator = new GenerateLayer();
+        $layer->popUp()->delete();
         $layer->delete();
         $generator->generateLayer();
         return redirect()->route('admin.layers.all');

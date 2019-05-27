@@ -16,6 +16,7 @@ class GenerateLayer {
         foreach($layers as $layer){
         $fields = $layer->fields;
         $layers = $layer->default_layer;
+
           if($fields==null){
             $fields = ["*"];
           }
