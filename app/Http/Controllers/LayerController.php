@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Classes\GenerateLayer;
-use App\Classes\GeneratePopUp;
 use Illuminate\Http\Request;
 use App\LayerModel;
 use App\PopUpLayer;
@@ -32,12 +31,18 @@ class LayerController extends Controller
         $layer = LayerModel::find($id);
         $popup = $layer->find($id)->popUp;
         if($layer->type == 'dynamic'){
+            // if($popup == null){
+            //   dd('tidak ada relasi');
+            // }
           $defaultlayer = implode(",",$layer->default_layer);
           return view('admin.layer.viewDetailLayer')->withLayer($layer)->withDefaultlayer($defaultlayer)->withPopup($popup);
         }
         elseif ($layer->type == 'feature') {
+          // if(count($popup == null)){
+          //   dd('tidak ada relasi');
+          // }
           $field = implode(",",$layer->fields);
-          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withField($field)->withPopup($popp);
+          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withField($field)->withPopup($popup);
         }
     }
 
@@ -63,7 +68,6 @@ class LayerController extends Controller
       }
       $layer = new LayerModel();
       $generator = new GenerateLayer();
-      $popUpGenerator = new GeneratePopUp();
       $layer->title = $request->title;
       $layer->url = $request->url;
       $layer->type = strtolower($request->type);
@@ -74,7 +78,6 @@ class LayerController extends Controller
       $layer->group = $request->group;
       $layer->save();
       $generator->generateLayer();
-      $popUpGenerator->generatePopUp();
       return redirect()->route('admin.layers.all');
     }
 

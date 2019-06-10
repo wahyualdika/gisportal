@@ -44,6 +44,7 @@
     <input type='hidden' name='id' class='id' />
   </table>
   <a href='{{route('admin.layer.generate')}}' class='btn btn-info'>Generate Layer</a>
+  <a href='{{route('admin.popup.generate')}}' class='btn btn-info'>Generate Popup</a>
 </div>
 
 {{ $layers->links() }}

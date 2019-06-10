@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Classes\GeneratePopUp;
 use App\Http\Requests;
 use App\LayerModel;
 use App\PopUpLayer;
@@ -28,6 +28,7 @@ class PopUpController extends Controller
             'layer_id'  => 'required|numeric',
         ));
         $popup = new PopUpLayer();
+        $popUpGenerator = new GeneratePopUp();
         $popup->id_layer  = $request->id_layer;
         $popup->title     = $request->title;
         $popup->url       = $request->url;
@@ -36,7 +37,7 @@ class PopUpController extends Controller
         $popup->sub_layer = $request->layer;
 
         $popup->save();
-
+        $popUpGenerator->generatePopUp();
         return response()->json($popup);
     }
 
@@ -57,6 +58,7 @@ class PopUpController extends Controller
             'layer_id'  => 'required|numeric',
         ));
         $popup = PopUpLayer::find($id);
+        $popUpGenerator = new GeneratePopUp();
         $popup->id_layer  = $request->id_layer;
         $popup->title     = $request->title;
         $popup->url       = $request->url;
@@ -65,7 +67,14 @@ class PopUpController extends Controller
         $popup->sub_layer = $request->layer;
 
         $popup->save();
-
+        $popUpGenerator->generatePopUp();
         return response()->json($popup);
+    }
+
+    public function generateFromDB()
+    {
+      $generator = new GeneratePopUp();
+      $generator->generatePopUp();
+      return redirect()->route('admin.layers.all')->with('success', 'Pop Generated!');
     }
 }

@@ -43,10 +43,10 @@
   </div></div>
 
   <div class="panel panel-primary"><div class="panel-heading">
-  @if($layer->popup()->exists() == false)
-      <a href='{{route('admin.popUp.form',['id'=>$popup->id])}}' class='btn btn-info'>Tambah Pop Up</a>
+  @if($popup==null)
+    <a href='{{route('admin.popUp.form',['id'=>$layer->id])}}' class='btn btn-info'>Tambah Pop Up</a>
   @elseif($popup->count() > 0)
-      <a href='{{route('admin.popUp.formUpdate',['id'=>$popup->id])}}' class='btn btn-info'>Edit Pop Up</a>
+    <a href='{{route('admin.popUp.formUpdate',['id'=>$popup->id])}}' class='btn btn-info'>Edit Pop Up</a>
   @endif
 </div></div>
 @endsection
