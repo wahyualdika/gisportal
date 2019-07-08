@@ -55,9 +55,11 @@ class GenerateLayer {
                 mode: 0,
                 imageParameters: buildImageParameters({
                     layerIds: [",FILE_APPEND);
+
                     foreach( $layers as $key => $lyr ) {
                       file_put_contents($destination,"'".$lyr."'".",",FILE_APPEND);
                     }
+
          file_put_contents($destination,
                     "],
                     layerOption: 'show'

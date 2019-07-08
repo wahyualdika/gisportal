@@ -18,14 +18,40 @@ class PopUpController extends Controller
     }
 
     public function input(Request $request){
-      //dd($request);
+      if ($request->type == "feature") {
         $this->validate($request,array(
-            'title'     => 'required|max:255',
-            'url'       => 'required',
+            'title'     => 'required|string|max:255',
+            'url'       => 'required|string',
+            'fields'    => 'required|max:255',
+            'id_layer'  => 'required',
+            'layer_id'  => 'required|numeric',
+            'aliases'   => 'required|max:255',
+        ));
+        $str = str_split($request->url);
+        $popup = new PopUpLayer();
+        $popUpGenerator = new GeneratePopUp();
+        $popup->id_layer  = $request->id_layer;
+        $popup->title     = $request->title;
+        $popup->url       = $request->url;
+        $popup->fields    = $request->fields;
+        $popup->layer_id  = $request->layer_id;
+        $popup->sub_layer = end($str);
+        $popup->aliases   = $request->aliases;
+
+        $popup->save();
+        $popUpGenerator->generatePopUp();
+        return response()->json(['status' => '200','massage' => 'Data Saved']);
+      }
+
+      elseif ($request->type == "dynamic") {
+        $this->validate($request,array(
+            'title'     => 'required|string|max:255',
+            'url'       => 'required|string',
             'layer'     => 'required|numeric',
             'fields'    => 'required|max:255',
             'id_layer'  => 'required',
             'layer_id'  => 'required|numeric',
+            'aliases'   => 'required|max:255',
         ));
         $popup = new PopUpLayer();
         $popUpGenerator = new GeneratePopUp();
@@ -35,10 +61,13 @@ class PopUpController extends Controller
         $popup->fields    = $request->fields;
         $popup->layer_id  = $request->layer_id;
         $popup->sub_layer = $request->layer;
+        $popup->aliases   = $request->aliases;
 
         $popup->save();
         $popUpGenerator->generatePopUp();
-        return response()->json($popup);
+        return response()->json(['status' => '200','massage' => 'Data Saved']);
+      }
+
     }
 
     public function updateForm($id){
@@ -48,14 +77,42 @@ class PopUpController extends Controller
     }
 
     public function update(Request $request, $id){
-      //dd($request);
+
+      if ($request->type == "feature") {
         $this->validate($request,array(
-            'title'     => 'required|max:255',
-            'url'       => 'required',
+            'title'     => 'required|string|max:255',
+            'url'       => 'required|string',
+            'fields'    => 'required|max:255',
+            'id_layer'  => 'required|string',
+            'layer_id'  => 'required|numeric',
+            'aliases'   => 'required|max:255',
+        ));
+        $str = str_split($request->url);
+        $popup = PopUpLayer::find($id);
+        $popUpGenerator = new GeneratePopUp();
+        $popup->id_layer  = $request->id_layer;
+        $popup->title     = $request->title;
+        $popup->url       = $request->url;
+        $popup->fields    = $request->fields;
+        $popup->layer_id  = $request->layer_id;
+        $popup->sub_layer = end($str);
+        $popup->aliases   = $request->aliases;
+
+        $popup->save();
+        $popUpGenerator->generatePopUp();
+        return response()->json(['status' => '200','massage' => 'Data Saved']);
+
+      }
+
+
+        $this->validate($request,array(
+            'title'     => 'required|string|max:255',
+            'url'       => 'required|string',
             'layer'     => 'required|numeric',
             'fields'    => 'required|max:255',
-            'id_layer'  => 'required',
+            'id_layer'  => 'required|string',
             'layer_id'  => 'required|numeric',
+            'aliases'   => 'required|max:255',
         ));
         $popup = PopUpLayer::find($id);
         $popUpGenerator = new GeneratePopUp();
@@ -65,10 +122,11 @@ class PopUpController extends Controller
         $popup->fields    = $request->fields;
         $popup->layer_id  = $request->layer_id;
         $popup->sub_layer = $request->layer;
+        $popup->aliases   = $request->aliases;
 
         $popup->save();
         $popUpGenerator->generatePopUp();
-        return response()->json($popup);
+        return response()->json(['status' => '200','massage' => 'Data Saved']);
     }
 
     public function generateFromDB()

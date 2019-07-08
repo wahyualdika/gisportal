@@ -10,6 +10,7 @@ class PopUpLayer extends Model
     protected $guarded = [];
     protected $casts = [
           'fields' => 'array',
+          'aliases'=> 'array',
     ];
 
     public function layer(){
