@@ -5,11 +5,19 @@
 @section('main')
 <div class=container-fluid>
 
-  @if (session('status'))
-    <div class="alert alert-success">
-        {{ session('status') }}
-    </div>
-  @endif
+  @if ($message = Session::get('success'))
+     <div class="alert alert-success alert-block">
+       <button type="button" class="close" data-dismiss="alert">×</button>
+         <strong>{{ $message }}</strong>
+     </div>
+   @endif
+
+   @if ($message = Session::get('error'))
+     <div class="alert alert-error alert-block">
+       <button type="button" class="close" data-dismiss="alert">×</button>
+         <strong>{{ $message }}</strong>
+     </div>
+   @endif
 
   <table class='table'>
     <tr>

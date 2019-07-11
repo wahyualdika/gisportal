@@ -29,20 +29,24 @@ class LayerController extends Controller
 
     public function viewDetails($id){
         $layer = LayerModel::find($id);
-        $popup = $layer->find($id)->popUp;
+        $popup = "";
+        try {
+            if($layer->popup()->exists()){
+              $popup = $layer->find($id)->popUp;
+            }
+            else{
+              $popup = NULL;
+            }
+        } catch (\Exception $e) {
+          return $e->getMessage();
+        }
         if($layer->type == 'dynamic'){
-            // if($popup == null){
-            //   dd('tidak ada relasi');
-            // }
-          $defaultlayer = implode(",",$layer->default_layer);
-          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withDefaultlayer($defaultlayer)->withPopup($popup);
+            $defaultlayer = implode(",",$layer->default_layer);
+            return view('admin.layer.viewDetailLayer')->withLayer($layer)->withDefaultlayer($defaultlayer)->withPopup($popup);
         }
         elseif ($layer->type == 'feature') {
-          // if(count($popup == null)){
-          //   dd('tidak ada relasi');
-          // }
-          $field = implode(",",$layer->fields);
-          return view('admin.layer.viewDetailLayer')->withLayer($layer)->withField($field)->withPopup($popup);
+            $field = implode(",",$layer->fields);
+            return view('admin.layer.viewDetailLayer')->withLayer($layer)->withField($field)->withPopup($popup);
         }
     }
 

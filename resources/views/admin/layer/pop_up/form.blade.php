@@ -7,7 +7,7 @@
 @endsection
 
 @section('main')
-<div class=container-fluid>
+<div class=container>
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -58,9 +58,10 @@
   </div>
 </div>
 
-<div class='form-inline' id="field-list">
+<div class=container>
+<div class='form container-fluid' id="field-container">
 
-
+</div>
 </div>
 
 <input type='hidden' name='layer_id' value="{{$layer->id}}"/>
@@ -68,6 +69,9 @@
 <div>
   <p>
     <button type="button" class="btn btn-primary btn-xs" id="add-field">Tambah Field</button>
+  </p>
+  <p>
+    <button type="button" class="btn btn-primary btn-xs" id="remove-field">Hapus Field</button>
   </p>
 </div>
 
@@ -83,18 +87,22 @@
 var field="";
 var layer="";
 var count=0;
-var fAttr =   "<div class='form-group'>"+
+var fAttr =   "<div id='field-list'>"+
+              "<div class='form-group'>"+
               "<label for='exampleInputField'>Field</label>"+
               "<input type='text' name='fields[]' class='form-control' id='url-layer' placeholder='Masukkan Nama Field' required>"+
               "</div>"+
               "<div class='form-group'>"+
               "<label for='exampleInputAlias'>Alias</label>"+
               "<input type='text' name='aliases[]' class='form-control' id='url-layer' placeholder='Masukkan Alias Field' required>"+
-              "</div>";
+              "</div>"+"</div>";
  $(document).ready(function(){
-      $("#add-field").click(function(){
-        $("#field-list").append(fAttr);
-      });
+       $("#add-field").click(function(){
+         $("#field-container").append(fAttr);
+       });
+       $("#remove-field").click(function(){
+         $("#field-list").detach();
+       });
 
            $("#type-layer").change(function(){
              var value = $("#type-layer").val();

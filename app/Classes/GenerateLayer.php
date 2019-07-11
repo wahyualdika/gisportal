@@ -42,7 +42,7 @@ class GenerateLayer {
             options: {
                 id: '$layer->id_layer',
                 opacity: 1.0,
-                visible: '$visible',
+                visible: $visible,
                 outFields: [",FILE_APPEND);
 
                 foreach( $fields as $key => $field ) {

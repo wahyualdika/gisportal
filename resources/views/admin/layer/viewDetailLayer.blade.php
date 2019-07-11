@@ -3,6 +3,21 @@
 @endsection
 
 @section('main')
+
+@if ($message = Session::get('success'))
+   <div class="alert alert-success alert-block">
+     <button type="button" class="close" data-dismiss="alert">×</button>
+       <strong>{{ $message }}</strong>
+   </div>
+ @endif
+
+ @if ($message = Session::get('error'))
+   <div class="alert alert-success alert-block">
+     <button type="button" class="close" data-dismiss="alert">×</button>
+       <strong>{{ $message }}</strong>
+   </div>
+ @endif
+
 <div class="panel panel-primary"><div class="panel-heading">
   <h3 class="panel-title">Nama Layer</h3>
 </div>
@@ -43,10 +58,16 @@
   </div></div>
 
   <div class="panel panel-primary"><div class="panel-heading">
-  @if($popup==null)
+  @if ($popup==null)
     <a href='{{route('admin.popUp.form',['id'=>$layer->id])}}' class='btn btn-info'>Tambah Pop Up</a>
-  @elseif($popup->count() > 0)
-    <a href='{{route('admin.popUp.formUpdate',['id'=>$popup->id])}}' class='btn btn-info'>Edit Pop Up</a>
+  @elseif ($popup->count() > 0)
+      <div class='btn-group' role='group' aria-label='...'>
+          <form action='{{route('admin.popUp.delete',['id'=>$popup->id])}}' class='forms-sample' method='post'>
+            {{ csrf_field() }}
+              <button  class='btn btn-default opener-dialog' type="submit">Hapus Pop Up</button>
+              <a href='{{route('admin.popUp.formUpdate',['id'=>$popup->id])}}' class='btn btn-info'>Edit Pop Up</a>
+          </form>
+      </div>
   @endif
 </div></div>
 @endsection

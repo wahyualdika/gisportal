@@ -11,6 +11,10 @@
     <th>Link</th>
     <th style='text-align:center'>Aksi</th>
   </tr>
+
+  <div id="dialog-form" title="Delete Confirmation">
+      <p>Do you want to delete this data?</p>
+  </div>
   @foreach ($petas as $peta)
       <tr>
         <td>{{ $peta->nama_peta }}</td>
@@ -70,6 +74,12 @@ $( function() {
                 });
 
             }
+        },{
+              text: "No",
+              icon: "ui-icon-heart",
+              click: function() {
+                  $( "#dialog-form" ).dialog( "close" );
+              }
         }
     ]
   });

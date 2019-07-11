@@ -55,10 +55,12 @@ Route::post('/admin/layers/delete/{id}','LayerController@deleteLayers')->name('a
 Route::get('/admin/layers/update/{id}','LayerController@updateLayers')->name('admin.layers.formUpdate');
 Route::post('admin/layers/update/{id}','LayerController@update')->name('admin.layers.update');
 
+//Halaman Admin untuk Pop Up Layer
 Route::get('/admin/layer/popUp/{id}/form','PopUpController@form')->name('admin.popUp.form');
 Route::post('/admin/layer/popUp/input','PopUpController@input')->name('admin.popUp.input');
 Route::get('/admin/layer/popUp/update/{id}','PopUpController@updateForm')->name('admin.popUp.formUpdate');
 Route::post('/admin/layer/popUp/update/{id}','PopUpController@update')->name('admin.popUp.update');
+Route::post('/admin/layer/popUp/delete/{id}','PopUpController@delete')->name('admin.popUp.delete');
 
 //URL Untuk generate layers dari DB
 Route::get('/admin/layer/generate','LayerController@generateFromDB')->name('admin.layer.generate');

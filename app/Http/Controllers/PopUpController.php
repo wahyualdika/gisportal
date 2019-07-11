@@ -13,7 +13,6 @@ class PopUpController extends Controller
     public function form($idLayer)
     {
         $layer = LayerModel::find($idLayer);
-        //dd($layer);
         return view('admin.layer.pop_up.form')->withLayer($layer);
     }
 
@@ -133,6 +132,17 @@ class PopUpController extends Controller
     {
       $generator = new GeneratePopUp();
       $generator->generatePopUp();
-      return redirect()->route('admin.layers.all')->with('success', 'Pop Generated!');
+      return redirect()->route('admin.layers.all')->with(['success'=> 'Pop Generated!']);
+    }
+
+    public function delete($id){
+      $popup = PopUpLayer::find($id);
+      $layer_id = $popup::find($id)->layer;
+      if($popup->delete()){
+        return redirect()->route('admin.maps.details',['id'=>$layer_id->id])->with(['success' => 'Pop Up Berhasil di Hapus']);
+      }
+      elseif (!$popup->delete()) {
+        return redirect()->route('admin.maps.details',['id'=>$layer_id->id])->with(['error' => 'Pop Up Gagal di Hapus']);
+      }
     }
 }
