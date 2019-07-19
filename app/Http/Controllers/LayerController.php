@@ -113,13 +113,16 @@ class LayerController extends Controller
     }
 
     public function update(Request $request,$id){
+      $layer = LayerModel::find($id);
+      $generator = new GenerateLayer();
+
       if($request->type=='dynamic'){
         $this->validate($request,array(
             'title' => 'required|max:255',
             'url'   => 'required',
             'type'  => 'required|max:255',
             'default_layer' => 'required',
-            'id_layer' => 'required|unique:layer,id_layer',
+            'id_layer' => 'required|unique:layer,id_layer'. $layer->id,
         ));
       }
       elseif($request->type == 'feature'){
@@ -127,13 +130,11 @@ class LayerController extends Controller
             'title' => 'required|max:255',
             'url'   => 'required|max:255',
             'type'  => 'required|max:255',
-            'id_layer' => 'required|unique:layer,id_layer',
+            'id_layer' => 'required|unique:layer,id_layer,'. $layer->id,
             'fields' => 'required',
         ));
       }
 
-      $layer = LayerModel::find($id);
-      $generator = new GenerateLayer();
       $layer->title = $request->title;
       $layer->url = $request->url;
       $layer->type = strtolower($request->type);
