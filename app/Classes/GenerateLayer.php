@@ -67,6 +67,10 @@ class GenerateLayer {
             },
             layerControlLayerInfos: {
                 layerGroup: '$layer->group'
+            },
+            editorLayerInfos: {
+                exclude: false,
+                disableGeometryUpdate: false
             }
           },",FILE_APPEND);
         }
