@@ -3,10 +3,10 @@
 	<head>
 		<title>UPTB-PDGA</title>
 	</head>
-		<link rel="stylesheet" href="{!! URL::asset('css/navi.css') !!}" type="text/css" />
-		<link rel="stylesheet" href="{!! URL::asset('css/layout.css') !!}" type="text/css" />
-    <link rel="stylesheet" href="{!! URL::asset('media/lofslidernews/css/layout.css') !!}" type="text/css" />
-    <link rel="stylesheet" href="{!! URL::asset('media/lofslidernews/css/style.css') !!}" type="text/css" />
+		<link rel="stylesheet" href="{!! URL::asset('public/css/navi.css') !!}" type="text/css" />
+		<link rel="stylesheet" href="{!! URL::asset('public/css/layout.css') !!}" type="text/css" />
+    <link rel="stylesheet" href="{!! URL::asset('public/media/lofslidernews/css/layout.css') !!}" type="text/css" />
+    <link rel="stylesheet" href="{!! URL::asset('public/media/lofslidernews/css/style.css') !!}" type="text/css" />
     @yield('stylesheet')
 
 
@@ -50,7 +50,7 @@
 		<div id="footer" style="background:#172F3D;">
 		<div class="box1">
 			<h2>Tentang kami</h2>
-				<img class="imgl" src="{!! URL::asset('/img/logo/bapp.jpg') !!}" alt="" />
+				<img class="imgl" src="{!! URL::asset('public/img/logo/bapp.jpg') !!}" alt="" />
 				<p>Berkat peran Badan Perencanaan Pembangunan Aceh yang secara nyata dan signifikan berhasil memacu pembangunan Daerah Istimewa Aceh melalui perumusan kebijakan pembangunan daerah, maka pada perkembangannya Presiden Republik Indonesia memandang perlu meningkatkan status menjadi salah satu komponen dalam lingkungan organisasi pemerintah daerah. Peningkatan status ini dilakukan melalui surat Keputusan Presiden Republik Indonesia Nomor 15 Tahun 1973.</p>
 		</div>
 		<div class="box contactdetails">
@@ -70,9 +70,9 @@
 			<h2>Dinas Terkait</h2>
 				<div class="wrap">
 					<div class="fix"></div>
-					<div class="flickr_badge_image" id="flickr_badge_image1"><a href="http://www.acehprov.go.id/" target="_blank"><img src="{!! URL::asset('img/logo/pemprov_aceh.png') !!}" alt="" /></a></div>
-					<div class="flickr_badge_image" id="flickr_badge_image4"><a href="http://big.go.id/" target="_blank"><img src="{!! URL::asset('img/logo/big.png') !!}" alt="" /></a></div>
-					<div class="flickr_badge_image" id="flickr_badge_image5"><a href="http://www.lapan.go.id/" target="_blank"><img src="{!! URL::asset('img/logo/lapan.png') !!}" alt="" /></a></div>
+					<div class="flickr_badge_image" id="flickr_badge_image1"><a href="http://www.acehprov.go.id/" target="_blank"><img src="{!! URL::asset('public/img/logo/pemprov_aceh.png') !!}" alt="" /></a></div>
+					<div class="flickr_badge_image" id="flickr_badge_image4"><a href="http://big.go.id/" target="_blank"><img src="{!! URL::asset('public/img/logo/big.png') !!}" alt="" /></a></div>
+					<div class="flickr_badge_image" id="flickr_badge_image5"><a href="http://www.lapan.go.id/" target="_blank"><img src="{!! URL::asset('public/img/logo/lapan.png') !!}" alt="" /></a></div>
 					<div class="fix"></div>
 				</div>
 		</div>
@@ -91,9 +91,9 @@
 @yield('footer')
 
   <script>var dojoConfig = { parseOnLoad: true };</script>
-  <script src="{!! URL::asset('/media/lofslidernews/js/jquery.js') !!}"></script>
-  <script src="{!! URL::asset('/media/lofslidernews/js/jquery.easing.js') !!}"></script>
-  <script src="{!! URL::asset('/media/lofslidernews/js/script.js') !!}"></script>
+  <script src="{!! URL::asset('public/media/lofslidernews/js/jquery.js') !!}"></script>
+  <script src="{!! URL::asset('public/media/lofslidernews/js/jquery.easing.js') !!}"></script>
+  <script src="{!! URL::asset('public/media/lofslidernews/js/script.js') !!}"></script>
   <script type="text/javascript">
   $(document).ready( function(){
   $('#lofslidecontent45').lofJSidernews( {interval	:4000,

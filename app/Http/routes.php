@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/admin/login', function () {
+Route::get('/admin/login',['middleware' => 'login' ,function () {
     return view('auth.login');
-})->name('admin.login');
+}])->name('admin.login');
 
 //Halaman Depan Untuk Berita
 Route::get('/', 'PagesController@getHome')->name('home');
