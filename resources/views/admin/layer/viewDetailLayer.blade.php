@@ -57,7 +57,8 @@
     @endif
   </div></div>
 
-  <div class="panel panel-primary"><div class="panel-heading">
+  <div class="panel panel-primary">
+  <div class="panel-heading">
   @if ($popup==null)
     <a href='{{route('admin.popUp.form',['id'=>$layer->id])}}' class='btn btn-info'>Tambah Pop Up</a>
   @elseif ($popup->count() > 0)
@@ -69,7 +70,25 @@
           </form>
       </div>
   @endif
-</div></div>
+</div>
+</div>
+
+<div class="panel panel-primary">
+<div class="panel-heading">
+@if ($foto==null)
+  <a href='{{route('admin.foto.form',['id'=>$layer->id])}}' class='btn btn-info'>Tambah Foto</a>
+  @elseif ($foto->count() > 0)
+      <div class='btn-group' role='group' aria-label='...'>
+          <form action='' class='forms-sample' method='post'>
+            {{ csrf_field() }}
+              <button  class='btn btn-default opener-dialog' type="submit">Hapus Foto</button>
+              <a href='{{route('admin.foto.view',['id'=>$layer->id])}}' class='btn btn-info'>Edit Foto</a>
+          </form>
+      </div>
+@endif
+</div>
+</div>
+
 @endsection
 
 

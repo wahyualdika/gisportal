@@ -76,6 +76,28 @@
   <input type='text' name='id_layer' class='form-control'  placeholder='Masukkan ID Layer yang unik'>
 </div>
 
+<div class='form-group' id="foto-layer">
+  <label for='exampleFotoLayer'>Foto</label>
+  <input type='file' name='image[]' class='form-control'>
+</div>
+
+<div class=container>
+<div class='form container-fluid' id="foto-container">
+
+</div>
+</div>
+
+
+<div>
+  <p>
+    <button type="button" class="btn btn-primary btn-xs" id="add-foto">Tambah Foto</button>
+  </p>
+  <p>
+    <button type="button" class="btn btn-primary btn-xs" id="remove-foto">Hapus Foto</button>
+  </p>
+</div>
+
+
 <button type='submit' name='submit' class='btn btn-default'>Submit</button>
 </form>
 </div>
@@ -88,9 +110,22 @@
 var field="";
 var layer="";
 var count=0;
+var fAttr =   "<div id='foto-list'>"+
+              "<div class='form-group' id='foto-layer'>"+
+              "<label for='exampleInputField'>Field</label>"+
+              "<input type='file' name='image[]' class='form-control' id='url-layer' placeholder='Masukkan Nama Field' required>"+
+              "</div>"+"</div>";
+
 $(document).ready(function(){
     $(".js-example-tags").select2({
       tags: true
+    });
+
+    $("#add-foto").click(function(){
+      $("#foto-container").append(fAttr);
+    });
+    $("#remove-foto").click(function(){
+      $("#foto-list").detach();
     });
 
     $("#type-layer").change(function(){
@@ -146,6 +181,7 @@ $(document).ready(function(){
 
           if ( response.hasOwnProperty("fields") ){
             field = response.fields;
+            console.log("response foto:\n", field[13].name);
             for(var i = 0; i < field.length; i++){
                 field[i]= {id:field[i].name,name:field[i].name}
             }
@@ -160,7 +196,7 @@ $(document).ready(function(){
 
             layer = response.layers;
 
-            console.log("response as text:\n", data, count++);
+            console.log("response :\n", layer);
             var dataLayer = $.map(layer, function (obj) {
                 obj.text =  obj.text || obj.name;
                 return obj;

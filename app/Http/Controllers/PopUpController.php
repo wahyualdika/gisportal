@@ -28,7 +28,7 @@ class PopUpController extends Controller
         ));
         $str = str_split($request->url);
         $popup = new PopUpLayer();
-        $popUpGenerator = new GeneratePopUp();
+        $popUpGenerator   = new GeneratePopUp();
         $popup->id_layer  = $request->id_layer;
         $popup->title     = $request->title;
         $popup->url       = $request->url;

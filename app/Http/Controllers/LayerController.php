@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\LayerModel;
 use App\PopUpLayer;
 use App\Http\Requests;
-use File;
 use Illuminate\Support\Facades\Storage;
 
 class LayerController extends Controller
@@ -30,6 +29,7 @@ class LayerController extends Controller
     public function viewDetails($id){
         $layer = LayerModel::find($id);
         $popup = "";
+        $foto = "";
         try {
             if($layer->popup()->exists()){
               $popup = $layer->find($id)->popUp;
@@ -40,13 +40,26 @@ class LayerController extends Controller
         } catch (\Exception $e) {
           return $e->getMessage();
         }
+
+        try {
+          if($layer->foto()->exists()){
+            $foto = $layer->find($id)->foto;
+          }
+          else{
+            $foto = NULL;
+          }
+        } catch (\Exception $e) {
+          return $e->getMessage();
+        }
+
+
         if($layer->type == 'dynamic'){
             $defaultlayer = implode(",",$layer->default_layer);
-            return view('admin.layer.viewDetailLayer')->withLayer($layer)->withDefaultlayer($defaultlayer)->withPopup($popup);
+            return view('admin.layer.viewDetailLayer')->withLayer($layer)->withDefaultlayer($defaultlayer)->withPopup($popup)->withFoto($foto);
         }
         elseif ($layer->type == 'feature') {
             $field = implode(",",$layer->fields);
-            return view('admin.layer.viewDetailLayer')->withLayer($layer)->withField($field)->withPopup($popup);
+            return view('admin.layer.viewDetailLayer')->withLayer($layer)->withField($field)->withPopup($popup)->withFoto($foto);
         }
     }
 
@@ -68,6 +81,7 @@ class LayerController extends Controller
             'type'  => 'required|max:255',
             'id_layer' => 'required|unique:layer,id_layer',
             'fields' => 'required',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ));
       }
       $layer = new LayerModel();
@@ -80,6 +94,7 @@ class LayerController extends Controller
       $layer->fields = $request->fields;
       $layer->visible = $request->visible;
       $layer->group = $request->group;
+
       $layer->save();
       $generator->generateLayer();
       return redirect()->route('admin.layers.all');

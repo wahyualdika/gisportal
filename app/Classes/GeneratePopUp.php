@@ -38,7 +38,16 @@ class GeneratePopUp{
       }
 
       file_put_contents($destination,
-      "]
+      "],
+      mediaInfos: [{
+                        title: '',
+                        caption: '',
+                        type: 'image',
+                        value: {
+                            sourceURL: 'http://localhost/gisportal_baru/public/storage/authentication/img/webgis/$id->id_layer/{".$field."}.jpg',".
+                            "linkURL: 'http://localhost/gisportal_baru/public/storage/authentication/img/webgis/$id->id_layer/{".$field."}.jpg',".
+                        "}
+                    }]
         }
           },",FILE_APPEND);
 

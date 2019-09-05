@@ -38,6 +38,7 @@ class NewsController extends Controller
           'namaBerita' => 'required|max:255',
           'date'  => 'required',
           'isi' => 'required',
+          'filename' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
       ));
       $berita = new BeritaModel();
       $berita->namaBerita = $request->namaBerita;

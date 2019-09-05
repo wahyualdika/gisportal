@@ -17,4 +17,9 @@ class LayerModel extends Model
     {
         return $this->hasOne('App\PopUpLayer','layer_id','id');
     }
+
+    public function foto()
+   {
+       return $this->hasMany('App\Foto','layer_id');
+   }
 }

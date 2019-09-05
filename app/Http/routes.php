@@ -62,6 +62,13 @@ Route::get('/admin/layer/popUp/update/{id}','PopUpController@updateForm')->name(
 Route::post('/admin/layer/popUp/update/{id}','PopUpController@update')->name('admin.popUp.update');
 Route::post('/admin/layer/popUp/delete/{id}','PopUpController@delete')->name('admin.popUp.delete');
 
+//Halaman Admin untuk foto layers
+Route::get('/admin/layer/{id}/foto/form','FotoController@form')->name('admin.foto.form');
+Route::post('/admin/layer/foto/','FotoController@store')->name('admin.foto.store');
+Route::get('/admin/layer/{id}/foto/','FotoController@view')->name('admin.foto.view');
+Route::post('/admin/layer/{id}/foto/edit','FotoController@edit')->name('admin.foto.edit');
+
+
 //URL Untuk generate layers dari DB
 Route::get('/admin/layer/generate','LayerController@generateFromDB')->name('admin.layer.generate');
 Route::get('/admin/popup/generate','PopUpController@generateFromDB')->name('admin.popup.generate');
