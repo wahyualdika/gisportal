@@ -11,7 +11,8 @@ use Codedge\Fpdf\Fpdf\Fpdf;
 class PageMapController extends Controller
 {
       public function getWebGIS(){
-        return view('WebGIS.main');
+        // return view('WebGIS.main');
+        return view('cmv.viewer.index');
       }
 
       public function getRecentMap(){

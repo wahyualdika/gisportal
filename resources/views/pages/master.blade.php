@@ -30,7 +30,8 @@
   						</li>
 
   						<li><a href="http://gisportal.acehprov.go.id:8080/geoportal/catalog/main/home.page">GEOPORTAL</a></li>
-  						<li><a href="{{route('home.webGIS')}}">WEBGIS</a></li>
+  						<!-- <li><a href="{{route('home.webGIS')}}">WEBGIS</a></li> -->
+							<li><a href="{{route('home.webGIS')}}">WEBGIS</a></li>
   						<li><a href="{{route('home.news.list')}}">BERITA</a></li>
   						<li><a href="#">PRODUK</a>
   							<ul>
