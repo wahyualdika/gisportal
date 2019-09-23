@@ -174,6 +174,8 @@ class LayerController extends Controller
         $layer = LayerModel::find($id);
         $generator = new GenerateLayer();
         $layer->popUp()->delete();
+        $layer->foto()->delete();
+        File::deleteDirectory(public_path('storage/authentication/img/webgis/'.$layer->id_layer));
         $layer->delete();
         $generator->generateLayer();
         return redirect()->route('admin.layers.all');

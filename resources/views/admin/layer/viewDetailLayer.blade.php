@@ -79,9 +79,7 @@
   <a href='{{route('admin.foto.form',['id'=>$layer->id])}}' class='btn btn-info'>Tambah Foto</a>
   @elseif ($foto->count() > 0)
       <div class='btn-group' role='group' aria-label='...'>
-          <form action='' class='forms-sample' method='post'>
-            {{ csrf_field() }}
-              <button  class='btn btn-default opener-dialog' type="submit">Hapus Foto</button>
+              <!-- <a href='' class='btn btn-danger'>Hapus Foto</a> -->
               <a href='{{route('admin.foto.view',['id'=>$layer->id])}}' class='btn btn-info'>Edit Foto</a>
           </form>
       </div>

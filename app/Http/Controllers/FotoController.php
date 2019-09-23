@@ -73,4 +73,6 @@ class FotoController extends Controller
           echo "There is no file";
         }
     }
+
+    
 }
