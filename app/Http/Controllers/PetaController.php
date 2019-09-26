@@ -81,12 +81,13 @@ class PetaController extends Controller
         return redirect()->route('admin.maps.all');
     }
 
-
-
     public function deleteMaps(Request $request, $id){
-      $peta = MapModel::find($id);
-      File::delete(public_path('storage/authentication/'.$peta->path));
-      $peta->delete();
-      return redirect()->route('admin.maps.all');
+        $peta = MapModel::find($id);
+        if(file_exists(public_path('storage/authentication/'.$peta->path)))
+        {
+            File::delete(public_path('storage/authentication/'.$peta->path));
+        }
+        $peta->delete();
+        return redirect()->route('admin.maps.all');
     }
 }

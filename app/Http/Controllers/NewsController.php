@@ -94,7 +94,9 @@ class NewsController extends Controller
 
   public function deleteNews(Request $request, $id){
       $berita = BeritaModel::find($id);
-      File::delete(public_path('storage/authentication/'.$berita->gambar_path));
+      if(file_exists(public_path('storage/authentication/'.$berita->gambar_path))){
+          File::delete(public_path('storage/authentication/'.$berita->gambar_path));
+      }
       $berita->delete();
       return redirect()->route('admin.news.all');
   }
