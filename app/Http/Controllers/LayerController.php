@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\LayerModel;
 use App\PopUpLayer;
 use App\Http\Requests;
+use File;
 use Illuminate\Support\Facades\Storage;
 
 class LayerController extends Controller
@@ -130,14 +131,13 @@ class LayerController extends Controller
     public function update(Request $request,$id){
       $layer = LayerModel::find($id);
       $generator = new GenerateLayer();
-
       if($request->type=='dynamic'){
         $this->validate($request,array(
             'title' => 'required|max:255',
             'url'   => 'required',
             'type'  => 'required|max:255',
             'default_layer' => 'required',
-            'id_layer' => 'required|unique:layer,id_layer'. $layer->id,
+            'id_layer' => 'required|unique:layer,id_layer,'. $layer->id,
         ));
       }
       elseif($request->type == 'feature'){
@@ -149,7 +149,7 @@ class LayerController extends Controller
             'fields' => 'required',
         ));
       }
-
+      // dd($request->id_layer);
       $layer->title = $request->title;
       $layer->url = $request->url;
       $layer->type = strtolower($request->type);
@@ -175,7 +175,10 @@ class LayerController extends Controller
         $generator = new GenerateLayer();
         $layer->popUp()->delete();
         $layer->foto()->delete();
-        File::deleteDirectory(public_path('storage/authentication/img/webgis/'.$layer->id_layer));
+        $location = public_path('storage/authentication/img/webgis/'.$layer->id_layer);
+        if(File::isDirectory($location)){
+            File::deleteDirectory(public_path('storage/authentication/img/webgis/'.$layer->id_layer));
+        }
         $layer->delete();
         $generator->generateLayer();
         return redirect()->route('admin.layers.all');
