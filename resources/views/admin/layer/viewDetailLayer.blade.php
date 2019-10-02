@@ -37,7 +37,7 @@
      {{ $layer->type }}
   </div></div>
 <div class="panel panel-primary"><div class="panel-heading">
-    <h3 class="panel-title">Default Layer</h3>
+    <h3 class="panel-title">Default Layer/Field</h3>
   </div>
   <div class="panel-body">
     @if($layer->type == 'dynamic')
