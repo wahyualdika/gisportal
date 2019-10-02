@@ -76,7 +76,7 @@
   <input type='text' name='id_layer' class='form-control'  placeholder='Masukkan ID Layer yang unik'>
 </div>
 
-<div class='form-group' id="foto-layer">
+<!-- <div class='form-group' id="foto-layer">
   <label for='exampleFotoLayer'>Foto</label>
   <input type='file' name='image[]' class='form-control'>
 </div>
@@ -95,7 +95,7 @@
   <p>
     <button type="button" class="btn btn-primary btn-xs" id="remove-foto">Hapus Foto</button>
   </p>
-</div>
+</div> -->
 
 
 <button type='submit' name='submit' class='btn btn-default'>Submit</button>
@@ -110,23 +110,23 @@
 var field="";
 var layer="";
 var count=0;
-var fAttr =   "<div id='foto-list'>"+
-              "<div class='form-group' id='foto-layer'>"+
-              "<label for='exampleInputField'>Field</label>"+
-              "<input type='file' name='image[]' class='form-control' id='url-layer' placeholder='Masukkan Nama Field' required>"+
-              "</div>"+"</div>";
+// var fAttr =   "<div id='foto-list'>"+
+//               "<div class='form-group' id='foto-layer'>"+
+//               "<label for='exampleInputField'>Field</label>"+
+//               "<input type='file' name='image[]' class='form-control' id='url-layer' placeholder='Masukkan Nama Field' required>"+
+//               "</div>"+"</div>";
 
 $(document).ready(function(){
     $(".js-example-tags").select2({
       tags: true
     });
 
-    $("#add-foto").click(function(){
-      $("#foto-container").append(fAttr);
-    });
-    $("#remove-foto").click(function(){
-      $("#foto-list").detach();
-    });
+    // $("#add-foto").click(function(){
+    //   $("#foto-container").append(fAttr);
+    // });
+    // $("#remove-foto").click(function(){
+    //   $("#foto-list").detach();
+    // });
 
     $("#type-layer").change(function(){
       var value = $("#type-layer").val();
@@ -147,7 +147,7 @@ $(document).ready(function(){
     });
 });
 
-    require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/_base/json", "dojo/_base/array", "dojo/string", "esri/request", "dojo/domReady!","dijit/form/Select","dojo/data/ObjectStore","dojo/store/Memory","dojo/domReady!"], function(dom, on, domClass, dojoJson, array, dojoString, esriRequest) {
+    require(["dojo/dom", "dojo/on", "dojo/dom-class", "dojo/_base/json", "dojo/_base/array", "dojo/string", "esri/request", "dojo/domReady!","dojo/domReady!"], function(dom, on, domClass, dojoJson, array, dojoString, esriRequest) {
         on(dom.byId("type-layer"), "change", getFields);
 
 

@@ -82,7 +82,6 @@ class LayerController extends Controller
             'type'  => 'required|max:255',
             'id_layer' => 'required|unique:layer,id_layer',
             'fields' => 'required',
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ));
       }
       $layer = new LayerModel();

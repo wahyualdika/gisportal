@@ -25,6 +25,7 @@ class PopUpController extends Controller
             'id_layer'  => 'required',
             'layer_id'  => 'required|numeric',
             'aliases'   => 'required|max:255',
+            'foto'      => 'required|boolean',
         ));
         $str = str_split($request->url);
         $popup = new PopUpLayer();
@@ -36,6 +37,7 @@ class PopUpController extends Controller
         $popup->layer_id  = $request->layer_id;
         $popup->sub_layer = end($str);
         $popup->aliases   = $request->aliases;
+        $popup->show_foto = $request->foto;
 
         $popup->save();
         $popUpGenerator->generatePopUp();
@@ -51,6 +53,7 @@ class PopUpController extends Controller
             'id_layer'  => 'required',
             'layer_id'  => 'required|numeric',
             'aliases'   => 'required|max:255',
+            'foto'      => 'required|boolean',
         ));
         $popup = new PopUpLayer();
         $popUpGenerator = new GeneratePopUp();
@@ -61,6 +64,7 @@ class PopUpController extends Controller
         $popup->layer_id  = $request->layer_id;
         $popup->sub_layer = $request->layer;
         $popup->aliases   = $request->aliases;
+        $popup->show_foto = $request->foto;
 
         $popup->save();
         $popUpGenerator->generatePopUp();
@@ -85,6 +89,7 @@ class PopUpController extends Controller
             'id_layer'  => 'required|string',
             'layer_id'  => 'required|numeric',
             'aliases'   => 'required|max:255',
+            'foto'      => 'required|boolean',
         ));
         $str = str_split($request->url);
         $popup = PopUpLayer::find($id);
@@ -96,6 +101,7 @@ class PopUpController extends Controller
         $popup->layer_id  = $request->layer_id;
         $popup->sub_layer = end($str);
         $popup->aliases   = $request->aliases;
+        $popup->show_foto = $request->foto;
 
         $popup->save();
         $popUpGenerator->generatePopUp();
@@ -103,7 +109,7 @@ class PopUpController extends Controller
 
       }
 
-
+      if ($request->type == "dynamic") {
         $this->validate($request,array(
             'title'     => 'required|string|max:255',
             'url'       => 'required|string',
@@ -112,6 +118,7 @@ class PopUpController extends Controller
             'id_layer'  => 'required|string',
             'layer_id'  => 'required|numeric',
             'aliases'   => 'required|max:255',
+            'foto'      => 'required|boolean',
         ));
         $popup = PopUpLayer::find($id);
         $popUpGenerator = new GeneratePopUp();
@@ -122,10 +129,12 @@ class PopUpController extends Controller
         $popup->layer_id  = $request->layer_id;
         $popup->sub_layer = $request->layer;
         $popup->aliases   = $request->aliases;
+        $popup->show_foto = $request->foto;
 
         $popup->save();
         $popUpGenerator->generatePopUp();
         return response()->json(['status' => '200','massage' => 'Data Saved']);
+      }
     }
 
     public function generateFromDB()
@@ -136,9 +145,11 @@ class PopUpController extends Controller
     }
 
     public function delete($id){
+      $generator = new GeneratePopUp();
       $popup = PopUpLayer::find($id);
       $layer_id = $popup::find($id)->layer;
       if($popup->delete()){
+        $generator->generatePopUp();
         return redirect()->route('admin.maps.details',['id'=>$layer_id->id])->with(['success' => 'Pop Up Berhasil di Hapus']);
       }
       elseif (!$popup->delete()) {

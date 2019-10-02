@@ -65,6 +65,19 @@
   </div>
 </div>
 
+<div class='form-group' id="type">
+  <label for='ShowFoto'>Tampilkan Foto?</label>
+  <select class="form-control type" id="tampilkan-foto" name="foto">
+      @if ($popup->foto == 1)
+        <option value="1" selected="selected">Ya</option>
+        <option value="0">Tidak</option>
+      @else
+        <option value="1">Ya</option>
+        <option value="0" selected="selected">Tidak</option>
+      @endif   
+  </select>
+</div>
+
 <div class=container>
 <div class='form container-fluid' id="field-container">
 

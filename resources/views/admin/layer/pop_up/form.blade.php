@@ -58,6 +58,14 @@
   </div>
 </div>
 
+<div class='form-group' id="type">
+  <label for='ShowFoto'>Tampilkan Foto?</label>
+  <select class="form-control type" id="tampilkan-foto" name="foto">
+      <option value="1">Ya</option>
+      <option value="0">Tidak</option>
+  </select>
+</div>
+
 <div class=container>
 <div class='form container-fluid' id="field-container">
 
