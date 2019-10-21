@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Classes\GeneratePopUp;
 use App\Foto;
 use Image;
 use File;
@@ -68,11 +69,27 @@ class FotoController extends Controller
               $fotos->filename = $name;
               $fotos->save();
           }
+          return redirect()->route('admin.maps.details',['id'=>$layer->id])->with(['success' => 'Foto Berhasil di Ubah']);
         }
         else{
-          echo "There is no file";
+          return redirect()->route('admin.maps.details',['id'=>$layer->id])->with(['failure' => 'Foto Gagal di Ubah']);
         }
     }
 
-    
+    public function hapus($id){
+      $layer = LayerModel::findOrFail($id);
+      $generator = new GeneratePopUp();
+      if($layer->foto()->delete()){
+        $location = public_path('storage/authentication/img/webgis/'.$layer->id_layer);
+        if(File::isDirectory($location)){
+            File::deleteDirectory(public_path('storage/authentication/img/webgis/'.$layer->id_layer));
+            $generator->generatePopUp();
+        }
+        return redirect()->route('admin.maps.details',['id'=>$layer->id])->with(['success' => 'Foto Berhasil di Hapus']);
+      }
+      else{
+        return redirect()->route('admin.maps.details',['id'=>$layer->id])->with(['failure' => 'Foto Gagal di Hapus']);
+      }
+    }
+
 }

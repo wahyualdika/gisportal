@@ -67,6 +67,7 @@ Route::get('/admin/layer/{id}/foto/form','FotoController@form')->name('admin.fot
 Route::post('/admin/layer/foto/','FotoController@store')->name('admin.foto.store');
 Route::get('/admin/layer/{id}/foto/','FotoController@view')->name('admin.foto.view');
 Route::post('/admin/layer/{id}/foto/edit','FotoController@edit')->name('admin.foto.edit');
+Route::post('/admin/layer/{id}/foto/hapus','FotoController@hapus')->name('admin.foto.hapus');
 
 
 //URL Untuk generate layers dari DB
